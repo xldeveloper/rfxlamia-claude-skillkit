@@ -1,0 +1,18 @@
+{
+  "name": "skillkit-subagents",
+  "description": "Specialized subagent collection",
+  "version": "1.0.0",
+  "author": {
+    "name": "rfxlamia",
+    "email": "rfxlamia@github.com"
+  },
+  "subagents": [
+    "../../agents/creative-copywriter.md",
+    "../../agents/seo-manager.md",
+    "../../agents/dario-amodei.md",
+    "../../agents/sam-altman.md",
+    "../../agents/kotlin-pro.md",
+    "../../agents/doc-simplifier.md",
+    "../../agents/red-team.md"
+  ]
+}

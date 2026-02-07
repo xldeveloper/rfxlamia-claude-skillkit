@@ -1,14 +1,20 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "claude-skillkit-marketplace",
+  "description": "Professional skill creation tools and curated collection of high-quality skills & subagents for Claude Code. Research-driven workflow with anti-hallucination validation.",
   "owner": {
     "name": "rfxlamia",
     "email": "rfxlamia@github.com"
   },
+  "metadata": {
+    "version": "1.3.0",
+    "description": "Professional skill creation tools and curated collection of high-quality skills & subagents for Claude Code. Research-driven workflow with anti-hallucination validation."
+  },
   "plugins": [
     {
-      "name": "claude-skillkit",
-      "description": "Professional skill creation with research-driven workflow and automated validation. Features 12-step workflow, 9 automation scripts, and multi-layer validation checkpoints for achieving 9.0/10+ quality scores.",
-      "source": "./",
+      "name": "skillkit-core",
+      "description": "Professional skill AND subagent creation with research-driven workflow. Features 12-step skill workflow, 8-step subagent workflow, 10 automation scripts, and multi-layer validation checkpoints for achieving 9.0/10+ quality scores.",
+      "source": "./skills/skillkit",
       "version": "1.3.0",
       "author": {
         "name": "rfxlamia"
@@ -18,13 +24,153 @@
       "license": "Apache-2.0",
       "keywords": [
         "skill-creator",
+        "subagent-creator",
         "skillkit",
         "validation",
         "automation",
         "quality-assurance",
         "research-driven",
-        "anti-hallucination"
-      ]
+        "anti-hallucination",
+        "testing",
+        "security",
+        "token-optimization"
+      ],
+      "category": "development",
+      "strict": false
+    },
+    {
+      "name": "skillkit-essentials",
+      "description": "Essential skills for everyday development: beginner-friendly explanations (baby-education), comprehensive README creation (readme-expert), LLM prompt optimization (prompt-engineering), and AI-to-human doc transformation (humanize-docs).",
+      "source": "./bundles/essentials",
+      "version": "1.0.0",
+      "author": {
+        "name": "rfxlamia"
+      },
+      "homepage": "https://github.com/rfxlamia/claude-skillkit",
+      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "license": "Apache-2.0",
+      "keywords": [
+        "documentation",
+        "education",
+        "prompting",
+        "learning",
+        "beginner-friendly"
+      ],
+      "category": "productivity",
+      "strict": false
+    },
+    {
+      "name": "skillkit-frameworks",
+      "description": "Agent capability frameworks: STAR framework for understanding implicit intent (framework-initiative) and critical thinking architecture with reasoning selection (framework-critical-thinking). Build smarter, self-correcting agents.",
+      "source": "./bundles/frameworks",
+      "version": "1.0.0",
+      "author": {
+        "name": "rfxlamia"
+      },
+      "homepage": "https://github.com/rfxlamia/claude-skillkit",
+      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "license": "Apache-2.0",
+      "keywords": [
+        "agent-framework",
+        "critical-thinking",
+        "reasoning",
+        "initiative",
+        "STAR"
+      ],
+      "category": "development",
+      "strict": false
+    },
+    {
+      "name": "skillkit-creative",
+      "description": "Content creation powerhouse: viral thread generation (thread-pro), storytelling (storyteller), screenwriting (screenwriter), creative copywriting with databases (creative-copywriting), image prompt optimization (imagine), and high-diversity content generation (diverse-content-gen).",
+      "source": "./bundles/creative",
+      "version": "1.0.0",
+      "author": {
+        "name": "rfxlamia"
+      },
+      "homepage": "https://github.com/rfxlamia/claude-skillkit",
+      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "license": "Apache-2.0",
+      "keywords": [
+        "creative",
+        "content-creation",
+        "writing",
+        "threads",
+        "storytelling",
+        "copywriting",
+        "image-generation"
+      ],
+      "category": "productivity",
+      "strict": false
+    },
+    {
+      "name": "skillkit-social-media",
+      "description": "Social media SEO optimization with 2025-proven strategies. Includes comprehensive CSV databases with 100+ caption formulas, thread structures, viral patterns, and platform-specific playbooks for Instagram, X/Twitter, and Threads.",
+      "source": "./skills/social-media-seo",
+      "version": "1.0.0",
+      "author": {
+        "name": "rfxlamia"
+      },
+      "homepage": "https://github.com/rfxlamia/claude-skillkit",
+      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "license": "Apache-2.0",
+      "keywords": [
+        "social-media",
+        "seo",
+        "marketing",
+        "instagram",
+        "twitter",
+        "threads",
+        "viral-content"
+      ],
+      "category": "productivity",
+      "strict": false
+    },
+    {
+      "name": "skillkit-subagents",
+      "description": "Specialized subagent collection: Creative copywriter with psychology triggers, SEO manager with proven formulas, decision-making agents (velocity-first Sam Altman, safety-first Dario Amodei), Kotlin expert, doc simplifier, and comprehensive red team security agent.",
+      "source": "./bundles/subagents",
+      "version": "1.0.0",
+      "author": {
+        "name": "rfxlamia"
+      },
+      "homepage": "https://github.com/rfxlamia/claude-skillkit",
+      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "license": "Apache-2.0",
+      "keywords": [
+        "subagents",
+        "specialized-agents",
+        "decision-making",
+        "security",
+        "kotlin",
+        "documentation"
+      ],
+      "category": "development",
+      "strict": false
+    },
+    {
+      "name": "red-teaming",
+      "description": "Comprehensive red teaming methodology for both cybersecurity (MITRE ATT&CK, pentesting) and AI/LLM systems (prompt injection, jailbreaking, OWASP Top 10 LLM). Includes threat modeling, attack simulation, compliance validation (NIST, EU AI Act), and progressive attack technique references.",
+      "source": "./skills/red-teaming",
+      "version": "1.0.0",
+      "author": {
+        "name": "rfxlamia"
+      },
+      "homepage": "https://github.com/rfxlamia/claude-skillkit",
+      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "license": "Apache-2.0",
+      "keywords": [
+        "security",
+        "red-team",
+        "pentesting",
+        "vulnerability-assessment",
+        "ai-security",
+        "llm-security",
+        "prompt-injection",
+        "compliance"
+      ],
+      "category": "security",
+      "strict": false
     }
   ]
 }
