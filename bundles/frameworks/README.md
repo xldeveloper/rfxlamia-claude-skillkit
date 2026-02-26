@@ -5,11 +5,11 @@
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/rfxlamia/claude-skillkit)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/rfxlamia/claude-skillkit/blob/main/LICENSE)
 
-Architectural frameworks bundle for building AI agents with critical thinking capabilities and implicit intent understanding. Includes structured reasoning selection, metacognitive monitoring, and the STAR framework for preventing literal interpretation traps.
+Architectural frameworks bundle for building AI agents with critical thinking capabilities, implicit intent understanding, and adversarial review protocols. Includes structured reasoning selection, metacognitive monitoring, the STAR framework for preventing literal interpretation traps, and mandatory bug-quota reviews.
 
 ## What's Included
 
-This bundle provides 2 foundational framework skills:
+This bundle provides 3 foundational framework skills:
 
 ### 🧠 framework-critical-thinking
 
@@ -98,6 +98,33 @@ Uses STAR framework (Stop-Think-Analyze-Respond) to prevent literal execution th
 - Task is read-only (analysis, explanation)
 - User explicitly asks to "execute immediately without analysis"
 
+---
+
+### ⚔️ adversarial-review
+
+**Adversarial review protocol for brainstorming, product planning, and technical architecture.**
+
+Validates ideas against reality with mandatory bug quotas and structured resolution paths. Prevents superficial reviews by forcing minimum 3 specific issues and providing actionable options for each.
+
+**Trigger on:**
+- `"adversarial review"`
+- `"run adversarial protocol"`
+- `"validate brainstorming"`
+- `"stress test idea/plan/architecture"`
+- Any review of planning documents
+
+**4-Stage protocol:**
+
+1. **Reality vs Claims** — web search min 3× diverse angles, each claim marked VALID/PARTIAL/INVALID
+2. **Acceptance Criteria** — stress test specific executor capability
+3. **Mandatory Bug Quota** — minimum 3 specific issues; forces deeper dig if insufficient
+4. **Interactive Resolution** — severity levels (Critical/High/Medium/Low) + 3 options:
+   - **A:** Auto-fix (agent implements the fix)
+   - **B:** Action items (specific steps for user to follow)
+   - **C:** Deep dive (in-depth investigation of the issue)
+
+**Differentiator:** Mandatory bug quota prevents superficial "looks good" reviews. The executor stress test differentiates capability from intent.
+
 ## Installation
 
 ```bash
@@ -114,6 +141,9 @@ After installation, both framework skills are available:
 
 # STAR framework for implicit intent understanding
 /framework-initiative
+
+# Adversarial review for plans and architecture
+/adversarial-review
 ```
 
 ### Example: Building Self-Correcting Agent
@@ -153,6 +183,31 @@ After installation, both framework skills are available:
 # → Recommendation: Tree of Thoughts (BFS for exploration)
 ```
 
+### Example: Choosing Reasoning Method
+
+```bash
+/framework-critical-thinking
+> "Should I use Chain of Thought or Tree of Thoughts for this code refactoring task?"
+
+# Reasoning Router analysis:
+# - Task complexity: High (multiple refactoring approaches)
+# - Solution paths: Multiple viable options
+# → Recommendation: Tree of Thoughts (BFS for exploration)
+```
+
+### Example: Stress Testing a Plan
+
+```bash
+/adversarial-review
+> "Review my microservices architecture plan"
+
+# 4-stage adversarial protocol:
+# Stage 1: Web search validating each claim (VALID/PARTIAL/INVALID)
+# Stage 2: Stress test: can THIS team actually build this?
+# Stage 3: Minimum 3 specific bugs/risks surfaced
+# Stage 4: For each issue, choose A(auto-fix)/B(action items)/C(deep dive)
+```
+
 ## When to Use Which Framework
 
 | Scenario | Framework | Why |
@@ -163,6 +218,9 @@ After installation, both framework skills are available:
 | Agent makes frequent errors | framework-critical-thinking | Add metacognitive monitoring |
 | Ambiguous refactoring request | framework-initiative | Think before wide-scope changes |
 | High-stakes decision (prod deploy) | framework-critical-thinking | Self-Consistency verification |
+| Validating a product brainstorm | adversarial-review | Reality vs Claims + mandatory bug quota |
+| Architecture decision under pressure | adversarial-review | Stress test before committing |
+| Pre-implementation plan review | adversarial-review | Surface risks with actionable resolution paths |
 
 ## Validation Report
 
@@ -171,6 +229,7 @@ After installation, both framework skills are available:
 ✅ **Skills verified:**
 - `../../skills/framework-critical-thinking/SKILL.md` - Exists, metadata confirmed
 - `../../skills/framework-initiative/SKILL.md` - Exists, metadata confirmed
+- `../../skills/adversarial-review/SKILL.md` - Exists, metadata confirmed
 
 ✅ **Metadata accuracy:**
 - Bundle name: `skillkit-frameworks` (from `plugin.json:2`)
