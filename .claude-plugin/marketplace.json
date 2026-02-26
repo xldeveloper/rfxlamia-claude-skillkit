@@ -40,7 +40,7 @@
     },
     {
       "name": "skillkit-essentials",
-      "description": "Essential skills for everyday development: beginner-friendly explanations (baby-education), comprehensive README creation (readme-expert), LLM prompt optimization (prompt-engineering), and AI-to-human doc transformation (humanize-docs).",
+      "description": "Essential skills for everyday development: beginner-friendly explanations (baby-education), comprehensive README creation (readme-expert), LLM prompt optimization (prompt-engineering), AI-to-human doc transformation (humanize-docs), technical spec creation (quick-spec), pre-deployment QA checklisting (pre-deploy-checklist), and developer progress logging (been-there-done-that).",
       "source": "./bundles/essentials",
       "version": "1.0.0",
       "author": {
@@ -54,14 +54,20 @@
         "education",
         "prompting",
         "learning",
-        "beginner-friendly"
+        "beginner-friendly",
+        "quick-spec",
+        "pre-deploy-checklist",
+        "been-there-done-that",
+        "planning",
+        "qa",
+        "progress-logging"
       ],
       "category": "productivity",
       "strict": false
     },
     {
       "name": "skillkit-frameworks",
-      "description": "Agent capability frameworks: STAR framework for understanding implicit intent (framework-initiative) and critical thinking architecture with reasoning selection (framework-critical-thinking). Build smarter, self-correcting agents.",
+      "description": "Agent capability frameworks: STAR framework for understanding implicit intent (framework-initiative), critical thinking architecture with reasoning selection (framework-critical-thinking), and adversarial review protocol with mandatory bug quota (adversarial-review). Build smarter, self-correcting agents and validate plans before execution.",
       "source": "./bundles/frameworks",
       "version": "1.0.0",
       "author": {
@@ -75,7 +81,8 @@
         "critical-thinking",
         "reasoning",
         "initiative",
-        "STAR"
+        "STAR",
+        "adversarial-review"
       ],
       "category": "development",
       "strict": false
