@@ -68,7 +68,7 @@ Phase 4: Packaging
 - Step 10: Quality assessment (`quality_scorer.py`)
 - Step 11: Package (`package_skill.py`)
 
-### Workflow B: Full Mode (15 Steps)
+### Workflow B: Full Mode (16 Steps)
 
 Use when `.skillkit-mode` contains `full`.
 
