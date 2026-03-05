@@ -24,6 +24,10 @@ description: >
 
 **PROCEED to corresponding section after intent detection.**
 
+**Stop Condition (Mandatory):**
+- If multiple routes match, or intent is ambiguous, agent MUST stop and ask user to choose one route.
+- Agent MUST NOT proceed until user confirms the route.
+
 **Workflow Value:** Research-driven approach validates design before building.
 Sequential steps with checkpoints produce 9.0/10+ quality vs ad-hoc creation.
 
@@ -45,9 +49,9 @@ Agent MUST detect or prompt for workflow mode before running the creation flow.
 | Mode | Steps | Validation | Quality Target | Time |
 |------|-------|------------|----------------|------|
 | **fast** | 12 | Structural only | >=9.0/10 | <10 min |
-| **full** | 15 | Structural + Behavioral | >=9.0/10 and behavioral >=7.0 | <20 min |
+| **full** | 16 | Structural + Behavioral | >=9.0/10 and behavioral >=7.0 | <20 min |
 
-Default mode is `fast` for backward compatibility.
+No implicit default mode is allowed when mode is not explicitly known.
 
 ### Workflow A: Fast Mode (12 Steps)
 
@@ -57,6 +61,7 @@ Phase 1: Decision and Research
 - Step 0: Decide approach (`decision_helper.py`)
 - Step 1: Research and proposals
 - Step 2: User validation
+- Stop Condition: Agent MUST stop and request user approval before continuing to Step 3.
 
 Phase 2: Creation
 - Step 3: Initialize skill (`init_skill.py --mode fast`)
@@ -81,6 +86,7 @@ Phase 1: Decision and Research
 - Step 0: Decide approach (`decision_helper.py`)
 - Step 1: Research and proposals
 - Step 2: User validation
+- Stop Condition: Agent MUST stop and request user approval before continuing to Step 3.
 
 Phase 2: Behavioral Baseline (extra vs fast)
 - Step 3 (RED): Run pressure scenarios without skill
@@ -112,7 +118,7 @@ Phase 7: Packaging
 Mode detection priority:
 1. Explicit flag: `--mode fast` or `--mode full`
 2. Skill marker: `.skillkit-mode` file
-3. Default: `fast`
+3. If still unknown: stop and ask user to choose `fast` or `full`
 
 ```python
 def detect_mode(skill_path: str, cli_flag: Optional[str] = None) -> str:
@@ -123,7 +129,7 @@ def detect_mode(skill_path: str, cli_flag: Optional[str] = None) -> str:
     if marker_file.exists():
         return marker_file.read_text().strip()
 
-    return "fast"
+    raise ValueError("Mode unknown. Ask user: fast-mode or full mode?")
 ```
 
 ---
@@ -189,6 +195,7 @@ python scripts/decision_helper.py --answers ../../tmp/skillkit/decision-answers.
 2. Answer interactive questions
 3. Receive recommendation with confidence score
 4. Proceed if Skills recommended (confidence >=75%)
+5. If confidence <75% or recommendation is uncertain, stop and ask user whether to continue, switch route, or refine inputs.
 
 **For detailed workflow:** [See references/section-4-decision-workflow-skills-vs-subagents.md](references/section-4-decision-workflow-skills-vs-subagents.md)
 
@@ -212,6 +219,7 @@ python scripts/decision_helper.py --answers ../../tmp/skillkit/decision-answers.
 - Tool: `python scripts/init_subagent.py subagent-name --path ~/.claude/agents`
 - Creates: `~/.claude/agents/subagent-name.md` with template
 - **Important:** Subagents are individual `.md` files (not directories)
+- Stop Condition: If target file already exists, agent MUST stop and ask whether to overwrite, rename, or cancel.
 
 **STEP 2: Define Configuration**
 - Edit YAML frontmatter (name, description, type, tools, skills)
@@ -243,6 +251,7 @@ python scripts/decision_helper.py --answers ../../tmp/skillkit/decision-answers.
 **STEP 8: Documentation & Deployment**
 - Create README.md
 - Register in system
+- Stop Condition: Agent MUST ask for explicit user confirmation before register/deploy actions.
 
 **For detailed workflow:** [See references/section-6-subagent-creation-workflow.md](references/section-6-subagent-creation-workflow.md)
 
@@ -258,6 +267,10 @@ python scripts/decision_helper.py --answers ../../tmp/skillkit/decision-answers.
 3. Structure creation
 4. Execute validation steps (3-8)
 5. Package (Step 9)
+
+**Stop Condition (Mandatory):**
+- Before structure creation or any overwrite/write operation, agent MUST ask user confirmation.
+- Agent MUST NOT modify files until user confirms.
 
 **For detailed workflow:** [See references/section-5-migration-workflow-doc-to-skill.md](references/section-5-migration-workflow-doc-to-skill.md)
 
