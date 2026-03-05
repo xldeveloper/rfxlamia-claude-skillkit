@@ -16,3 +16,5 @@ readme-expert-test/
 
 # plan
 docs/plans/
+.worktrees/
+worktrees/
