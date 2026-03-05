@@ -197,7 +197,12 @@ class DecisionHelper:
             }
         }
     
-    def analyze_from_answers(self, answers: Dict[str, bool], skip_questions: List[str] = None) -> Dict:
+    def analyze_from_answers(
+        self,
+        answers: Dict[str, bool],
+        skip_questions: List[str] = None,
+        mode: str = "fast",
+    ) -> Dict:
         """
         Analyze use case from pre-provided answers.
 
@@ -258,9 +263,9 @@ class DecisionHelper:
         self.answers = answers
         self._calculate_scores(skip_questions=skip_questions)
 
-        return self._build_recommendation()
+        return self._build_recommendation(mode=mode)
     
-    def analyze_from_description(self, description: str) -> Dict:
+    def analyze_from_description(self, description: str, mode: str = "fast") -> Dict:
         """
         Infer answers from natural language description.
 
@@ -315,7 +320,7 @@ class DecisionHelper:
                 answers[q_id] = False  # Placeholder only, won't affect score
 
         # Analyze with inferred answers (passing uncertain_questions list)
-        result = self.analyze_from_answers(answers, skip_questions=uncertain_questions)
+        result = self.analyze_from_answers(answers, skip_questions=uncertain_questions, mode=mode)
 
         if result['status'] == 'success':
             # Add inference metadata
@@ -446,7 +451,7 @@ class DecisionHelper:
             
             self.score += score_change
     
-    def _build_recommendation(self) -> Dict:
+    def _build_recommendation(self, mode: str = "fast") -> Dict:
         """
         Generate final recommendation with confidence.
         
@@ -470,11 +475,19 @@ class DecisionHelper:
             recommendation = "Strong Subagent"
             confidence = 0.90 + (abs(self.score) - 6) * 0.025  # 90-95%
         
+        mode_note = (
+            "Full mode includes pressure testing"
+            if mode == "full"
+            else "Use --mode full for TDD behavioral validation"
+        )
+
         return {
             "status": "success",
             "recommendation": recommendation,
             "score": self.score,
             "confidence": round(confidence, 2),
+            "workflow_mode": mode,
+            "mode_note": mode_note,
             "reasoning": self.reasoning,
             "token_analysis": self._calculate_token_impact(),
             "pattern_suggestions": self._generate_pattern_suggestions(),
@@ -654,6 +667,12 @@ def main():
         action='store_true',
         help='Show decision criteria (Mode 3 - Reference)'
     )
+    parser.add_argument(
+        '--mode',
+        choices=['fast', 'full'],
+        default='fast',
+        help='Workflow mode: fast (structural only) or full (structural + behavioral)'
+    )
 
     # Add --format argument (JSON is default for agent-layer tool)
     add_format_argument(parser, default='json')
@@ -678,15 +697,21 @@ def main():
             else:
                 with open(answers_path, 'r') as f:
                     answers = json.load(f)
-                result = helper.analyze_from_answers(answers)
+                result = helper.analyze_from_answers(answers, mode=args.mode)
         
         elif args.analyze:
             # Mode 2: Keyword-based inference
-            result = helper.analyze_from_description(args.analyze)
+            result = helper.analyze_from_description(args.analyze, mode=args.mode)
         
         elif args.show_criteria:
             # Mode 3: Show criteria
             result = helper.show_criteria()
+            result["workflow_mode"] = args.mode
+            result["mode_note"] = (
+                "Full mode includes pressure testing"
+                if args.mode == "full"
+                else "Use --mode full for TDD behavioral validation"
+            )
     
     except json.JSONDecodeError as e:
         result = {
