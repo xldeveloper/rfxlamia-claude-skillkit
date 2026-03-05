@@ -11,7 +11,9 @@ Examples:
     init_skill.py custom-skill --path /custom/location
 """
 
+import argparse
 import sys
+from enum import Enum
 from pathlib import Path
 
 
@@ -186,23 +188,65 @@ Note: This is a text placeholder. Actual assets can be any file type.
 """
 
 
+class WorkflowMode(Enum):
+    FAST = "fast"      # 12-step, structural only
+    FULL = "full"      # 15-step, structural + behavioral
+
+
 def title_case_skill_name(skill_name):
     """Convert hyphenated skill name to Title Case for display."""
     return ' '.join(word.capitalize() for word in skill_name.split('-'))
 
 
-def init_skill(skill_name, path):
-    """
-    Initialize a new skill directory with template SKILL.md.
+def prompt_for_mode():
+    """Ask user for workflow mode during skill creation."""
+    print("\n" + "=" * 60)
+    print("WORKFLOW MODE SELECTION")
+    print("=" * 60)
+    print("\nFAST Mode (12 steps)")
+    print("  - Structural validation only")
+    print("  - Quick iteration")
+    print("  - Best for: simple utilities, prototypes")
+    print("\nFULL Mode (15 steps)")
+    print("  - Structural + behavioral validation")
+    print("  - TDD pressure testing")
+    print("  - Best for: discipline skills, production quality")
+    print("\n" + "-" * 60)
 
-    Args:
-        skill_name: Name of the skill
-        path: Path where the skill directory should be created
+    while True:
+        choice = input("\nSelect mode (1=fast, 2=full) [1]: ").strip() or "1"
+        if choice == "1":
+            return WorkflowMode.FAST
+        if choice == "2":
+            return WorkflowMode.FULL
+        print("Invalid choice. Enter 1 or 2.")
 
-    Returns:
-        Path to created skill directory, or None if error
-    """
-    # Determine skill directory path
+
+def get_skill_template(skill_name, mode=WorkflowMode.FAST):
+    """Get SKILL.md template based on workflow mode."""
+    skill_title = title_case_skill_name(skill_name)
+    template = SKILL_TEMPLATE
+
+    if mode == WorkflowMode.FULL:
+        template += """
+
+## Behavioral Validation
+
+### RED Phase - Baseline Failures
+<!-- Document rationalizations found WITHOUT skill -->
+
+### GREEN Phase - Verification
+<!-- Confirm compliance WITH skill -->
+"""
+
+    return template.format(
+        skill_name=skill_name,
+        skill_title=skill_title
+    )
+
+
+def create_skill_structure(skill_name, path, mode):
+    """Create skill directory and mode-specific SKILL.md."""
     skill_dir = Path(path).resolve() / skill_name
 
     # Check if directory already exists
@@ -218,13 +262,13 @@ def init_skill(skill_name, path):
         print(f"❌ Error creating directory: {e}")
         return None
 
-    # Create SKILL.md from template
-    skill_title = title_case_skill_name(skill_name)
-    skill_content = SKILL_TEMPLATE.format(
-        skill_name=skill_name,
-        skill_title=skill_title
-    )
+    # Create mode marker file
+    mode_file = skill_dir / '.skillkit-mode'
+    mode_file.write_text(mode.value)
+    print(f"✅ Created .skillkit-mode ({mode.value})")
 
+    # Create SKILL.md from template
+    skill_content = get_skill_template(skill_name, mode)
     skill_md_path = skill_dir / 'SKILL.md'
     try:
         skill_md_path.write_text(skill_content)
@@ -233,7 +277,26 @@ def init_skill(skill_name, path):
         print(f"❌ Error creating SKILL.md: {e}")
         return None
 
+    return skill_dir
+
+
+def init_skill(skill_name, path, mode=WorkflowMode.FAST):
+    """
+    Initialize a new skill directory with template SKILL.md.
+
+    Args:
+        skill_name: Name of the skill
+        path: Path where the skill directory should be created
+
+    Returns:
+        Path to created skill directory, or None if error
+    """
+    skill_dir = create_skill_structure(skill_name, path, mode)
+    if not skill_dir:
+        return None
+
     # Create resource directories with example files
+    skill_title = title_case_skill_name(skill_name)
     try:
         # Create scripts/ directory with example script
         scripts_dir = skill_dir / 'scripts'
@@ -271,8 +334,6 @@ def init_skill(skill_name, path):
 
 
 def main():
-    import argparse
-
     parser = argparse.ArgumentParser(
         description='Create a new skill from template',
         epilog='''Examples:
@@ -288,15 +349,31 @@ Skill name requirements:
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument('skill_name', help='Name of the skill to create')
-    parser.add_argument('--path', required=True, help='Path where the skill directory should be created')
+    parser.add_argument(
+        '--path',
+        default='.',
+        help='Path where the skill directory should be created (default: current directory)'
+    )
+    parser.add_argument(
+        '--mode',
+        choices=['fast', 'full'],
+        default=None,
+        help='Workflow mode: fast (12-step) or full (15-step with TDD). Default: fast'
+    )
 
     args = parser.parse_args()
+    selected_mode = (
+        WorkflowMode(args.mode)
+        if args.mode
+        else (prompt_for_mode() if sys.stdin.isatty() else WorkflowMode.FAST)
+    )
 
     print(f"🚀 Initializing skill: {args.skill_name}")
     print(f"   Location: {args.path}")
+    print(f"   Mode: {selected_mode.value}")
     print()
 
-    result = init_skill(args.skill_name, args.path)
+    result = init_skill(args.skill_name, args.path, selected_mode)
 
     if result:
         sys.exit(0)
