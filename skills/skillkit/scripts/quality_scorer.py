@@ -36,13 +36,13 @@ import argparse
 import json
 import re
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 
 class QualityScorer:
     """Score skill against best practices."""
     
-    def __init__(self, skill_path: str, detailed: bool = False):
+    def __init__(self, skill_path: Optional[str] = None, detailed: bool = False):
         """
         Initialize quality scorer.
         
@@ -52,17 +52,65 @@ class QualityScorer:
         
         References: Files 01-13 (all best practices)
         """
-        self.skill_path = Path(skill_path)
+        self.skill_path = Path(skill_path) if skill_path is not None else None
         self.detailed = detailed
         self.scores = {}
         self.recommendations = []
         
         # Validate skill path
+        if self.skill_path is None:
+            return
+
         if not self.skill_path.exists():
             raise FileNotFoundError(f"Skill directory not found: {skill_path}")
         
         if not (self.skill_path / "SKILL.md").exists():
             raise FileNotFoundError(f"SKILL.md not found in {skill_path}")
+
+    def calculate_final_score(
+        self,
+        structural_score: float,
+        behavioral_score: Optional[float] = None,
+    ) -> Dict:
+        """
+        Calculate final quality score with optional behavioral component.
+
+        Formula:
+        - fast mode: 100% structural
+        - full mode: 60% structural + 40% behavioral
+        """
+        if behavioral_score is None:
+            return {
+                "final_score": structural_score,
+                "structural_score": structural_score,
+                "behavioral_score": None,
+                "weights": {"structural": 1.0, "behavioral": 0.0},
+                "mode": "fast",
+            }
+
+        final = (structural_score * 0.6) + (behavioral_score * 0.4)
+        return {
+            "final_score": round(final, 2),
+            "structural_score": structural_score,
+            "behavioral_score": behavioral_score,
+            "weights": {"structural": 0.6, "behavioral": 0.4},
+            "mode": "full",
+        }
+
+    def run_behavioral_tests(self, skill_path: str, skill_type: str) -> float:
+        """
+        Run pressure tests and return behavioral score (0.0-10.0).
+        Called when --behavioral flag is passed.
+        """
+        try:
+            from pressure_tester import PressureTester, SkillType
+
+            tester = PressureTester()
+            result = tester.run_combined_pressure(skill_path, SkillType(skill_type))
+            return result.compliance_score
+        except Exception as exc:
+            print(f"Warning: Behavioral testing failed: {exc}")
+            return 0.0
     
     # ========== SCORING CATEGORIES ==========
     
@@ -836,12 +884,28 @@ def main():
         type=str,
         help='Export report to file (JSON or MD format based on extension)'
     )
+    parser.add_argument(
+        '--behavioral',
+        action='store_true',
+        help='Include behavioral pressure testing (full mode)'
+    )
+    parser.add_argument(
+        '--skill-type',
+        choices=['discipline', 'technique', 'pattern', 'reference'],
+        default='discipline',
+        help='Skill type for behavioral testing'
+    )
     
     args = parser.parse_args()
     
     try:
         scorer = QualityScorer(args.skill_path, detailed=args.detailed)
         overall = scorer.calculate_overall_score()
+        structural_score = round(overall['percentage'] / 10.0, 2)
+        behavioral_score = None
+        if args.behavioral:
+            behavioral_score = scorer.run_behavioral_tests(args.skill_path, args.skill_type)
+        final_score = scorer.calculate_final_score(structural_score, behavioral_score)
         
         # Agent-layer JSON output (stdout)
         if args.format == 'json':
@@ -850,6 +914,11 @@ def main():
                 'status': 'success',
                 'skill_path': str(scorer.skill_path),
                 'skill_name': scorer.skill_path.name,
+                'mode': final_score['mode'],
+                'final_score': final_score['final_score'],
+                'structural_score': final_score['structural_score'],
+                'behavioral_score': final_score['behavioral_score'],
+                'weights': final_score['weights'],
                 'overall': {
                     'score': overall['score'],
                     'max': overall['max'],
@@ -887,7 +956,7 @@ def main():
                 return 1
         
         # Return exit code based on score
-        if overall['percentage'] >= 70:
+        if final_score['final_score'] >= 7.0:
             return 0
         else:
             return 1
