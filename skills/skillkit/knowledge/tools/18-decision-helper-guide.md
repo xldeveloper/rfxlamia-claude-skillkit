@@ -33,15 +33,15 @@ Agent-layer tool untuk instant Skills vs Subagents recommendations menggunakan F
 
 **When:** Claude has extracted clear answers from conversation.
 
-**CRITICAL: Agent must create a temp JSON file first.**
+**CRITICAL: Agent MUST create a temp JSON file first.** The `decision_helper.py` script does NOT accept inline JSON strings - it requires a file path to a JSON file.
 
-**Step-by-step workflow:**
+**Step-by-step workflow (REQUIRED):**
 
 ```bash
-# 1. Create temp directory if needed
+# STEP 1: Create temp directory
 mkdir -p /tmp/skillkit
 
-# 2. Write answers to JSON file (NOT inline string)
+# STEP 2: Create JSON file with answers (REQUIRED - cannot be inline)
 cat > /tmp/skillkit/decision-answers.json <<'EOF'
 {
   "utility_task": false,
@@ -55,7 +55,7 @@ cat > /tmp/skillkit/decision-answers.json <<'EOF'
 }
 EOF
 
-# 3. Call decision helper with file path
+# STEP 3: Call decision helper with FILE PATH (not JSON string)
 cd /home/v/.claude/skills/skillkit && source venv/bin/activate
 python scripts/decision_helper.py --answers /tmp/skillkit/decision-answers.json
 ```
@@ -186,23 +186,34 @@ See File 03 for decision tree details.
 
 ## TROUBLESHOOTING
 
-**❌ Common Mistake: Passing inline JSON**
+**❌ Common Mistake: Passing inline JSON string**
 ```bash
-# WRONG - This fails with "FileNotFound"
+# WRONG - These will FAIL
 python decision_helper.py --answers "true,true,false,..."
 python decision_helper.py --answers '{"utility_task": true, ...}'
 ```
+**Why it fails:** The `--answers` flag expects a FILE PATH, not JSON content.
+The script reads the file at that path (see lines 669-677 of decision_helper.py).
 
-**✅ Correct: Create file first, then pass path**
+**✅ Correct: Create JSON file first, then pass the file path**
 ```bash
-# RIGHT - Write to file, then reference path
+# STEP 1: Create the JSON file
 cat > /tmp/skillkit/answers.json <<'EOF'
-{"utility_task": true, "multi_step": false, ...}
+{
+  "utility_task": true,
+  "multi_step": false,
+  "reusable": true,
+  "specialized_personality": false,
+  "missing_knowledge": false,
+  "coordination": false,
+  "isolated_context": false,
+  "clutter_chat": false
+}
 EOF
+
+# STEP 2: Pass the FILE PATH to --answers
 python decision_helper.py --answers /tmp/skillkit/answers.json
 ```
-
-**Why:** The `--answers` flag expects a FILE PATH, not JSON content (see line 669-677 of decision_helper.py).
 
 **Quick validation:**
 ```bash

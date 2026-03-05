@@ -1,28 +1,13 @@
 ---
 name: skillkit
 description: >
-  Professional skill AND subagent creation with research-driven workflow and automated validation.
-
-  USE WHEN: Creating new skills OR subagents, validating existing skills, deciding between Skills
-  vs Subagents, migrating documents to skills/subagents, or running individual validation tools.
-
-  PRIMARY TRIGGERS:
-  "create skill" = Full skill creation (12 steps with research + execution planning)
-  "create subagent" = Subagent creation (8 steps with template-based workflow)
-  "validate skill" = Validation workflow (steps 3-8)
-  "Skills vs Subagents" = Decision workflow (step 0) - recommends then creates
-  "convert doc to skill" = Migration workflow
-  "estimate tokens" = Token optimization
-  "security scan" = Security audit
-
-  WORKFLOW COMPLIANCE: Structured workflows with validation checkpoints.
-  Research phase (Step 1c-1d) ensures skills based on proven approaches.
-
-  DIFFERENTIATOR: Research-driven creation. Web search (3-5 queries) before
-  building. Multi-proposal generation. 10 automation scripts (9 skill + 1 subagent).
-  Quality 9.0+/10. NOW WITH SUBAGENT CREATION SUPPORT.
-
-  REUSED: Anthropic's init_skill.py and package_skill.py (production-tested).
+  Research-driven toolkit for creating and validating skills and subagents with
+  structured workflows, gates, and automation scripts.
+  Use for: create skill, create subagent, validate skill quality, decide Skills
+  vs Subagents, migrate docs to skills, estimate token cost, and security scan.
+  Includes proposal generation, quality scoring, progressive disclosure checks,
+  and packaging support. Built for consistent high-quality outputs with
+  reusable scripts and production-tested tooling.
 ---
 
 ## Section 1: Intent Detection & Routing
@@ -50,7 +35,7 @@ Sequential steps with checkpoints produce 9.0/10+ quality vs ad-hoc creation.
 **Quality Target:** >=9.0/10
 **Time:** <10 min with automation
 
-> **💡 Quick Note:** Make sure venv exists at skillkit root, or if it already exists, activate venv before using tools:
+> **💡 Quick Note:** Pastikan aktifkan venv sebelum pakai tools:
 > ```bash
 > cd /home/v/.claude/skills/skillkit && source venv/bin/activate
 > ```
@@ -130,8 +115,44 @@ Sequential steps with checkpoints produce 9.0/10+ quality vs ad-hoc creation.
 
 **Use when:** Uncertain if Skills is right approach
 
+**CRITICAL: Agent MUST create a temp JSON file first.** The `decision_helper.py` script does NOT accept inline JSON strings - it requires a file path to a JSON file.
+
+**Step-by-step workflow (REQUIRED):**
+
+```bash
+# STEP 1: Create temp directory
+mkdir -p /tmp/skillkit
+
+# STEP 2: Create JSON file with answers (REQUIRED - cannot be inline)
+cat > /tmp/skillkit/decision-answers.json <<'EOF'
+{
+  "utility_task": false,
+  "multi_step": true,
+  "reusable": false,
+  "specialized_personality": true,
+  "missing_knowledge": false,
+  "coordination": true,
+  "isolated_context": true,
+  "clutter_chat": true
+}
+EOF
+
+# STEP 3: Call decision helper with FILE PATH (not JSON string)
+cd /home/v/.claude/skills/skillkit && source venv/bin/activate
+python scripts/decision_helper.py --answers /tmp/skillkit/decision-answers.json
+```
+
+**Required JSON structure:**
+
+- 8 keys (exact names): `utility_task`, `multi_step`, `reusable`, `specialized_personality`, `missing_knowledge`, `coordination`, `isolated_context`, `clutter_chat`
+- All values MUST be boolean (`true` or `false`), not strings
+- Missing/extra keys will cause validation error
+
+**Accuracy:** Highest (90-95% confidence).
+
 **Process:**
-1. Run `decision_helper.py`
+
+1. Run `decision_helper.py` with json file.
 2. Answer interactive questions
 3. Receive recommendation with confidence score
 4. Proceed if Skills recommended (confidence >=75%)
@@ -248,41 +269,16 @@ python scripts/pattern_detector.py --interactive
 Guide: `knowledge/tools/17-pattern-tools-guide.md`
 
 **Decision Helper:**
-
-**IMPORTANT:** Before first use, read the guide for detailed 3-mode workflow:
-`knowledge/tools/18-decision-helper-guide.md`
-
-**Mode 1: Pre-Answered (PREFERRED - highest accuracy):**
 ```bash
-# Create temp JSON file with 8 boolean answers
-mkdir -p /tmp/skillkit
-cat > /tmp/skillkit/decision-answers.json <<'EOF'
-{
-  "utility_task": false,
-  "multi_step": true,
-  "reusable": false,
-  "specialized_personality": true,
-  "missing_knowledge": false,
-  "coordination": true,
-  "isolated_context": true,
-  "clutter_chat": true
-}
-EOF
-
-# Call with file path (NOT inline JSON)
-python scripts/decision_helper.py --answers /tmp/skillkit/decision-answers.json
-```
-
-**Mode 2: Keyword Inference (fallback when answers unclear):**
-```bash
+# Analyze use case (JSON output - agent-layer default)
 python scripts/decision_helper.py --analyze "code review with validation"
-```
 
-**Mode 3: Show Criteria (reference):**
-```bash
+# Show decision criteria (JSON output)
 python scripts/decision_helper.py --show-criteria --format json
-```
 
+# Text mode for human reading (debugging)
+python scripts/decision_helper.py --analyze "description" --format text
+```
 Guide: `knowledge/tools/18-decision-helper-guide.md`
 
 **Test Generator (v1.2: Parameter update):**
