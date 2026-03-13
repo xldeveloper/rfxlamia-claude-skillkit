@@ -10,8 +10,6 @@ The scenario definitions (PressureType, SkillType, _load_scenarios) are
 preserved as reference data for constructing pressure prompts manually.
 """
 
-import argparse
-import json
 import sys
 from dataclasses import dataclass
 from enum import Enum
