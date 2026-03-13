@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] - 2026-03-13
+
+### Added
+- **Full Mode Behavioral Testing Protocol** (`references/section-2-full-creation-workflow.md`)
+  - STEP 3 (RED): Subagent dispatch instructions for baseline pressure testing
+  - STEP 7 (GREEN): Compliance verification with skill loaded
+  - STEP 12 (REFACTOR): Combined pressure testing to close loopholes
+  - Pattern ported from `writing-skills` TDD methodology
+
+### Changed
+- `SKILL.md`: Full mode Steps 3, 7, 12 now reference section-2 (mandatory load)
+
+### Deprecated
+- `pressure_tester.py`: Superseded by section-2 Full Mode Behavioral Testing Protocol
+  - Script now exits with deprecation message and code 1
+  - Scenario definitions (PressureType, SkillType) preserved as reference data
+
 ## [2.0.1] - 2026-03-06
 
 ### Fixed
@@ -383,6 +400,7 @@ Comprehensive quality assurance improvements addressing Test Session #3 findings
 
 | Version | Date | Key Changes |
 |---------|------|-------------|
+| **2.1.0** | 2026-03-13 | Full mode TDD behavioral protocol, deprecate pressure_tester.py |
 | **1.3.0** | 2025-02-06 | Subagent creation support, 10 tools, 23 knowledge files |
 | **1.2.1** | 2025-11-14 | Bug fixes: imperative detection (11x improvement), confidence calculation, gitignore |
 | **1.2.0** | 2025-11-13 | Quality assurance improvements, 81% of issues fixed, new utilities |
