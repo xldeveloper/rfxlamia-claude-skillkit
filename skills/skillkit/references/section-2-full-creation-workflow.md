@@ -342,10 +342,10 @@ Generates automated tests for validation.
 
 ## Full Mode Behavioral Testing Protocol
 
-> **Mandatory reference for full mode Steps 3, 7, 12.**
+> **Mandatory reference for full mode Steps 3, 7, 12 (see "FULL MODE STEP" headers below).**
 > Load this section before executing any of these steps.
 
-### STEP 3 (RED): Behavioral Baseline
+### FULL MODE STEP 3 (RED): Behavioral Baseline
 
 **Purpose:** Document how agents behave WITHOUT the skill — capture exact rationalizations before the skill exists.
 
@@ -388,7 +388,7 @@ Generates automated tests for validation.
 
 ---
 
-### STEP 7 (GREEN): Compliance Verification
+### FULL MODE STEP 7 (GREEN): Compliance Verification
 
 **Purpose:** Verify the skill teaches resistance to the exact rationalizations documented in Step 3.
 
@@ -421,7 +421,7 @@ Generates automated tests for validation.
 
 ---
 
-### STEP 12 (REFACTOR): Combined Pressure
+### FULL MODE STEP 12 (REFACTOR): Combined Pressure
 
 **Purpose:** Find loopholes not caught by individual pressure tests.
 

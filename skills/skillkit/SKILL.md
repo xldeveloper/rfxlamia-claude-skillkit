@@ -90,7 +90,7 @@ Phase 1: Decision and Research
 
 Phase 2: Behavioral Baseline (extra vs fast)
 - Step 3 (RED): Run pressure scenarios without skill
-  **→ Load `references/section-2-full-creation-workflow.md` (mandatory) for dispatch instructions**
+  **→ Load `references/section-2-full-creation-workflow.md` → section "Full Mode Behavioral Testing Protocol" (mandatory)**
 - Step 4: Document baseline failures
 
 Phase 3: Creation
@@ -99,7 +99,7 @@ Phase 3: Creation
 
 Phase 4: Behavioral Verification (extra vs fast)
 - Step 7 (GREEN): Run scenarios with skill
-  **→ Load `references/section-2-full-creation-workflow.md` (mandatory) for dispatch instructions**
+  **→ Load `references/section-2-full-creation-workflow.md` → section "Full Mode Behavioral Testing Protocol" (mandatory)**
 - Step 8: Fix gaps
 
 Phase 5: Structural Validation
@@ -109,7 +109,7 @@ Phase 5: Structural Validation
 
 Phase 6: Refinement (extra vs fast)
 - Step 12 (REFACTOR): Combined pressure tests
-  **→ Load `references/section-2-full-creation-workflow.md` (mandatory) for dispatch instructions**
+  **→ Load `references/section-2-full-creation-workflow.md` → section "Full Mode Behavioral Testing Protocol" (mandatory)**
 - Step 13: Close loopholes
 
 Phase 7: Packaging
