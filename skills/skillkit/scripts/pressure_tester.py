@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """
 Pressure tester for behavioral validation of skills.
-Tests skill compliance under various pressure conditions.
 
-Usage:
-    python3 pressure_tester.py skill-name/ --pressure combined --format json
+DEPRECATED in v2.1: Superseded by the Full Mode Behavioral Testing Protocol.
+See: skills/skillkit/references/section-2-full-creation-workflow.md
+Section: 'Full Mode Behavioral Testing Protocol'
+
+The scenario definitions (PressureType, SkillType, _load_scenarios) are
+preserved as reference data for constructing pressure prompts manually.
 """
 
 import argparse
@@ -142,60 +145,14 @@ class PressureTester:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Test skill compliance under pressure conditions")
-    parser.add_argument("skill_path", help="Path to skill directory")
-    parser.add_argument(
-        "--pressure",
-        choices=["time", "sunk_cost", "authority", "exhaustion", "combined"],
-        default="combined",
-        help="Pressure type to test",
-    )
-    parser.add_argument(
-        "--skill-type",
-        choices=["discipline", "technique", "pattern", "reference"],
-        default="discipline",
-        help="Type of skill being tested",
-    )
-    parser.add_argument("--format", choices=["json", "text"], default="json")
-
-    args = parser.parse_args()
-
-    tester = PressureTester()
-    pressure_type = PressureType(args.pressure)
-    skill_type = SkillType(args.skill_type)
-
-    # v2 behavior is intentionally stubbed; emit explicit warning for operators.
     print(
-        "Warning: pressure_tester is running in v2 stub mode (mock compliance scoring).",
+        "DEPRECATED: pressure_tester.py has been superseded by the Full Mode "
+        "Behavioral Testing Protocol in full mode Steps 3, 7, and 12.\n"
+        "Load: skills/skillkit/references/section-2-full-creation-workflow.md\n"
+        "Section: 'Full Mode Behavioral Testing Protocol'",
         file=sys.stderr,
     )
-    print(
-        "Real subagent-based pressure execution is planned for v2.1.",
-        file=sys.stderr,
-    )
-
-    if pressure_type == PressureType.COMBINED:
-        result = tester.run_combined_pressure(args.skill_path, skill_type)
-    else:
-        result = tester.run_scenario(args.skill_path, pressure_type, skill_type)
-
-    output = {
-        "status": "success" if result.passed else "needs_improvement",
-        "compliance_score": result.compliance_score,
-        "rationalizations_found": result.rationalizations_found,
-        "fixes_needed": result.fixes_needed,
-        "skill_type": skill_type.value,
-        "pressure_type": pressure_type.value,
-    }
-
-    if args.format == "json":
-        print(json.dumps(output, indent=2))
-    else:
-        print("\nPressure Test Results")
-        print(f"Score: {result.compliance_score}/10")
-        print(f"Status: {'PASS' if result.passed else 'NEEDS WORK'}")
-
-    return 0 if result.passed else 1
+    return 1
 
 
 if __name__ == "__main__":
