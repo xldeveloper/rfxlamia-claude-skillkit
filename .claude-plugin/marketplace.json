@@ -181,6 +181,75 @@
       ],
       "category": "security",
       "strict": false
+    },
+    {
+      "name": "releasing",
+      "description": "Automate the full release workflow: version bumping (major/minor/patch), changelog generation, git tagging, pushing, and GitHub release creation. Handles semver across Node.js, Python, Rust, Go, and generic projects. Enforces mandatory confirmations before irreversible actions (push, release).",
+      "source": "./skills/releasing",
+      "version": "1.0.0",
+      "author": {
+        "name": "rfxlamia"
+      },
+      "homepage": "https://github.com/rfxlamia/skillkit",
+      "repository": "https://github.com/rfxlamia/skillkit",
+      "license": "Apache-2.0",
+      "keywords": [
+        "release",
+        "version",
+        "semver",
+        "changelog",
+        "git-tag",
+        "github-release",
+        "deployment"
+      ],
+      "category": "development",
+      "strict": false
+    },
+    {
+      "name": "validate-plan",
+      "description": "Validate implementation plans against DRY, YAGNI, TDD principles and best practices. Identifies gaps, anti-patterns, and improvement opportunities before execution. Prevents over-engineering and ensures test-first approach.",
+      "source": "./skills/validate-plan",
+      "version": "1.0.0",
+      "author": {
+        "name": "rfxlamia"
+      },
+      "homepage": "https://github.com/rfxlamia/skillkit",
+      "repository": "https://github.com/rfxlamia/skillkit",
+      "license": "Apache-2.0",
+      "keywords": [
+        "planning",
+        "validation",
+        "dry",
+        "yagni",
+        "tdd",
+        "code-review",
+        "best-practices"
+      ],
+      "category": "development",
+      "strict": false
+    },
+    {
+      "name": "verify-before-ship",
+      "description": "Enforce completion of all 7 production safety gates with evidence before any deployment. Blocks rationalized shortcuts under time, authority, sunk-cost, or exhaustion pressure. Gates: tests, security scan, breaking changes, config validation, staging verification, rollback plan, code review.",
+      "source": "./skills/verify-before-ship",
+      "version": "1.0.0",
+      "author": {
+        "name": "rfxlamia"
+      },
+      "homepage": "https://github.com/rfxlamia/skillkit",
+      "repository": "https://github.com/rfxlamia/skillkit",
+      "license": "Apache-2.0",
+      "keywords": [
+        "deployment",
+        "production",
+        "safety",
+        "verification",
+        "gates",
+        "devops",
+        "release"
+      ],
+      "category": "development",
+      "strict": false
     }
   ]
 }

@@ -13,6 +13,8 @@
     "../../skills/humanize-docs",
     "../../skills/quick-spec",
     "../../skills/pre-deploy-checklist",
-    "../../skills/been-there-done-that"
+    "../../skills/been-there-done-that",
+    "../../skills/releasing",
+    "../../skills/verify-before-ship"
   ]
 }

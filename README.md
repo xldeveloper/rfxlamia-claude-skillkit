@@ -27,7 +27,7 @@
 
 ## What is SkillKit?
 
-SkillKit v2 is a plugin for AI agents that provides a collection of **21 skills** and **7 subagents** designed to extend Claude's capabilities across content creation, engineering frameworks, security testing, and more.
+SkillKit v2 is a plugin for AI agents that provides a collection of **24 skills** and **7 subagents** designed to extend Claude's capabilities across content creation, engineering frameworks, security testing, and more.
 
 At its core, SkillKit v2 includes a **meta-skill** (`skillkit`) that helps create and validate new skills/subagents using a dual-mode workflow:
 - **Fast mode** for quick structural validation
@@ -62,6 +62,9 @@ In short, SkillKit v2 is a practical system for building reliable Claude capabil
 | 19 | **pre-deploy-checklist** | Intelligent pre-deployment QA checklist generator with parallel domain subagent analysis |
 | 20 | **been-there-done-that** | Document developer progress objectively after sprints with git session detection and factual logging |
 | 21 | **adversarial-review** | Adversarial review protocol with mandatory bug quota, reality validation, and structured resolution paths |
+| 22 | **releasing** | Automate release workflow: version bumping, changelog generation, git tagging, and GitHub releases |
+| 23 | **validate-plan** | Validate implementation plans against DRY, YAGNI, TDD principles before execution |
+| 24 | **verify-before-ship** | Enforce 7 production safety gates with evidence before deployment |
 
 ---
 
@@ -222,7 +225,10 @@ skillkit/
 │   ├── quick-spec/            # Technical spec creation
 │   ├── pre-deploy-checklist/  # Pre-deployment QA checklist
 │   ├── been-there-done-that/  # Developer progress logging
-│   └── adversarial-review/    # Adversarial review protocol
+│   ├── adversarial-review/    # Adversarial review protocol
+│   ├── releasing/             # Release workflow automation
+│   ├── validate-plan/         # Plan validation (DRY/YAGNI/TDD)
+│   └── verify-before-ship/    # Pre-deployment safety gates
 ├── agents/
 │   ├── seo-manager.md
 │   ├── creative-copywriter.md
