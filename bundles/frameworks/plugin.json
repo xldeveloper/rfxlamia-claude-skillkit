@@ -7,9 +7,9 @@
     "email": "rfxlamia@github.com"
   },
   "skills": [
-    "../../skills/framework-critical-thinking",
-    "../../skills/framework-initiative",
-    "../../skills/adversarial-review",
-    "../../skills/validate-plan"
+    "skills/framework-critical-thinking",
+    "skills/framework-initiative",
+    "skills/adversarial-review",
+    "skills/validate-plan"
   ]
 }
