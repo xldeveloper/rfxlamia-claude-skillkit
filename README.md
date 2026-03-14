@@ -1,6 +1,8 @@
-# Claude SkillKit
+# SkillKit
 
-> Professional skill creation with research-driven workflow and automated validation. Features dual-mode workflow (fast/full), behavioral validation, and multi-layer quality gates for achieving 9.0/10+ quality scores.
+> Professional skill and agent creation toolkit for AI agents. Works across Claude Code, OpenAI Codex, and other AI coding tools. Features dual-mode workflow (fast/full), behavioral validation, and multi-layer quality gates for achieving 9.0/10+ quality scores.
+>
+> **Previously known as `claude-skillkit`.** All old links redirect here automatically.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-2.1.0-green.svg)](.claude-plugin/plugin.json)
@@ -10,7 +12,7 @@
 
 ## Table of Contents
 
-- [What is Claude SkillKit?](#what-is-claude-skillkit)
+- [What is SkillKit?](#what-is-skillkit)
 - [Skills Catalog](#skills-catalog)
 - [Subagents Catalog](#subagents-catalog)
 - [Core: SkillKit Creator](#core-skillkit-creator)
@@ -23,9 +25,9 @@
 
 ---
 
-## What is Claude SkillKit?
+## What is SkillKit?
 
-Claude SkillKit v2 is a plugin for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that provides a collection of **21 skills** and **7 subagents** designed to extend Claude's capabilities across content creation, engineering frameworks, security testing, and more.
+SkillKit v2 is a plugin for AI agents that provides a collection of **21 skills** and **7 subagents** designed to extend Claude's capabilities across content creation, engineering frameworks, security testing, and more.
 
 At its core, SkillKit v2 includes a **meta-skill** (`skillkit`) that helps create and validate new skills/subagents using a dual-mode workflow:
 - **Fast mode** for quick structural validation
@@ -105,7 +107,7 @@ The `skillkit` skill is the engine that powers creation of new skills and subage
 ### As a Claude Code Plugin
 
 ```bash
-claude plugin marketplace add rfxlamia/claude-skillkit
+claude plugin marketplace add rfxlamia/skillkit
 ```
 
 ### Manual Installation
@@ -113,7 +115,7 @@ claude plugin marketplace add rfxlamia/claude-skillkit
 Clone the repository into your Claude Code skills directory:
 
 ```bash
-git clone https://github.com/rfxlamia/claude-skillkit.git
+git clone https://github.com/rfxlamia/skillkit.git
 ```
 
 Then reference the skills/agents in your Claude Code configuration.
@@ -190,7 +192,7 @@ See [`skills/skillkit/knowledge/INDEX.md`](skills/skillkit/knowledge/INDEX.md) f
 ## Project Structure
 
 ```
-claude-skillkit/
+skillkit/
 ├── .claude-plugin/
 │   ├── plugin.json            # Plugin metadata (v2.1.0)
 │   └── marketplace.json       # Marketplace listing

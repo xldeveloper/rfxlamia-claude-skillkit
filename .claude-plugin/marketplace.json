@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "claude-skillkit-marketplace",
+  "name": "skillkit-marketplace",
   "description": "Professional skill creation with TDD workflow and behavioral validation. Includes dual-mode (fast/full), pressure testing, and quality gates.",
   "owner": {
     "name": "rfxlamia",
@@ -19,8 +19,8 @@
       "author": {
         "name": "rfxlamia"
       },
-      "homepage": "https://github.com/rfxlamia/claude-skillkit",
-      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "homepage": "https://github.com/rfxlamia/skillkit",
+      "repository": "https://github.com/rfxlamia/skillkit",
       "license": "Apache-2.0",
       "keywords": [
         "skill-creator",
@@ -49,8 +49,8 @@
       "author": {
         "name": "rfxlamia"
       },
-      "homepage": "https://github.com/rfxlamia/claude-skillkit",
-      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "homepage": "https://github.com/rfxlamia/skillkit",
+      "repository": "https://github.com/rfxlamia/skillkit",
       "license": "Apache-2.0",
       "keywords": [
         "documentation",
@@ -76,8 +76,8 @@
       "author": {
         "name": "rfxlamia"
       },
-      "homepage": "https://github.com/rfxlamia/claude-skillkit",
-      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "homepage": "https://github.com/rfxlamia/skillkit",
+      "repository": "https://github.com/rfxlamia/skillkit",
       "license": "Apache-2.0",
       "keywords": [
         "agent-framework",
@@ -98,8 +98,8 @@
       "author": {
         "name": "rfxlamia"
       },
-      "homepage": "https://github.com/rfxlamia/claude-skillkit",
-      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "homepage": "https://github.com/rfxlamia/skillkit",
+      "repository": "https://github.com/rfxlamia/skillkit",
       "license": "Apache-2.0",
       "keywords": [
         "creative",
@@ -121,8 +121,8 @@
       "author": {
         "name": "rfxlamia"
       },
-      "homepage": "https://github.com/rfxlamia/claude-skillkit",
-      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "homepage": "https://github.com/rfxlamia/skillkit",
+      "repository": "https://github.com/rfxlamia/skillkit",
       "license": "Apache-2.0",
       "keywords": [
         "social-media",
@@ -144,8 +144,8 @@
       "author": {
         "name": "rfxlamia"
       },
-      "homepage": "https://github.com/rfxlamia/claude-skillkit",
-      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "homepage": "https://github.com/rfxlamia/skillkit",
+      "repository": "https://github.com/rfxlamia/skillkit",
       "license": "Apache-2.0",
       "keywords": [
         "subagents",
@@ -166,8 +166,8 @@
       "author": {
         "name": "rfxlamia"
       },
-      "homepage": "https://github.com/rfxlamia/claude-skillkit",
-      "repository": "https://github.com/rfxlamia/claude-skillkit",
+      "homepage": "https://github.com/rfxlamia/skillkit",
+      "repository": "https://github.com/rfxlamia/skillkit",
       "license": "Apache-2.0",
       "keywords": [
         "security",
