@@ -8,6 +8,7 @@ description: >
   Includes proposal generation, quality scoring, progressive disclosure checks,
   and packaging support. Built for consistent high-quality outputs with
   reusable scripts and production-tested tooling.
+category: core
 ---
 
 ## Section 1: Intent Detection & Routing

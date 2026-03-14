@@ -1,6 +1,7 @@
 ---
 name: verify-before-ship
 description: Enforce agent to complete all 7 production safety gates with evidence before any deployment. Use when about to deploy, push to production, merge a release branch, or ship any change to a live environment. Blocks rationalized shortcuts under time, authority, sunk-cost, or exhaustion pressure.
+category: deployment
 ---
 
 # Verify Before Ship

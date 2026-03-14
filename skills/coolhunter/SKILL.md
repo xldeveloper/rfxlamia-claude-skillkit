@@ -15,6 +15,7 @@ description: >
   
   OUTPUT: Markdown report with headline, summary, fact-check, and behavioral analysis
   saved to coolhunter-output/report-{datetime}/{title}.md
+category: creative
 ---
 
 ## Section 1: Intent Detection & Workflow Overview

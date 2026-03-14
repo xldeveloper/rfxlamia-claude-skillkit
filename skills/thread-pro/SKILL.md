@@ -5,6 +5,7 @@ description: |
   USE WHEN: User asks to write threads, create viral content, transform content into threads,
   or mentions "thread about [topic]". Target platforms: X/Twitter and Threads.
   TRIGGERS: write thread, create thread, thread about, viral thread, make this a thread, thread-pro
+category: creative
 ---
 
 # Thread Pro: From Boring AI to Viral Relatability

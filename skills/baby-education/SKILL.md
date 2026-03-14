@@ -1,6 +1,7 @@
 ---
 name: baby-education
 description: Makes agent explain concepts with extreme clarity for beginners learning new topics or projects. Uses analogies-first approach, visual mental models, and ELI5 style to transform complex technical explanations into accessible learning experiences. Trigger when user is new to a technology, starting a project, or explicitly requests simple explanations.
+category: engineering
 ---
 
 # Baby Education

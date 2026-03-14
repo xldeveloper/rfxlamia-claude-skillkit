@@ -12,7 +12,10 @@ description: >
   "validate README" → Validation-only workflow
   "check README accuracy" → Anti-hallucination audit
 
-  KEY FEATURES:
+category: documentation
+---
+
+## KEY FEATURES:
   - Codebase scanning for accurate facts
   - 5-layer anti-hallucination validation
   - Script execution testing

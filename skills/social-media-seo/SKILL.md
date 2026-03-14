@@ -3,8 +3,9 @@ name: social-media-seo
 description: >
   Optimize social media content for maximum discoverability and engagement using 2025-proven SEO strategies. 
   Includes comprehensive CSV databases with 100+ caption formulas, thread structures, viral patterns, and 
-  platform-specific optimization playbooks for Instagram, X/Twitter, and Threads. Works with seo-manager 
+  platform-specific optimization playbooks for Instagram, X/Twitter, and Threads. Works with seo-manager
   subagent for intelligent content generation.
+category: creative
 ---
 
 # Social Media SEO (2025)

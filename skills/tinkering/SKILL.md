@@ -22,6 +22,7 @@ description: >
   DIFFERENTIATOR: Unlike git branches (for committed direction), tinkering is
   for "I don't know if this will work" exploration. Try 5 things in sandbox
   before committing to a branch. Faster feedback, zero codebase pollution.
+category: experimentation
 ---
 
 # Tinkering

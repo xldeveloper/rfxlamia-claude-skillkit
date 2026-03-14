@@ -6,6 +6,7 @@ description: >
   Go, and generic projects. Enforces mandatory confirmations before irreversible actions (push, release).
   USE WHEN: user says "release", "bump version", "cut a release", "tag and release", "/releasing",
   or asks to prepare a new version of their project.
+category: deployment
 ---
 
 # Releasing
