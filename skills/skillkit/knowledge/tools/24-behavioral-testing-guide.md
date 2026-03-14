@@ -1,7 +1,7 @@
 ---
-title: "Behavioral Testing with pressure_tester.py"
+title: "Behavioral Testing via Full Mode Protocol"
 purpose: "Run RED->GREEN->REFACTOR behavioral checks for skill quality"
-tool_name: "pressure_tester.py"
+tool_name: "section-2-full-creation-workflow.md"
 tool_type: "validation-layer"
 read_priority: "high"
 read_when:
@@ -115,13 +115,8 @@ Use result fields:
 
 ## Failure Handling
 
-If behavioral run is invalid:
-- verify `pressure_tester.py` imports correctly
-- verify `--skill-type` is one of: `discipline`, `technique`, `pattern`, `reference`
-- re-run with `--format json` and inspect missing fields
-
-If run is valid but skill still weak:
-- update rationalization table in SKILL
-- add explicit "no exceptions" counters
-- add red-flags section
-- rerun RED/GREEN/REFACTOR
+If behavioral testing produces unclear results:
+- Ensure pressure prompts are specific to the skill's core rules (not generic)
+- Verify the subagent received the full SKILL.md content in its prompt
+- Re-run with a more provocative pressure prompt if agent complied too easily
+- Check `references/section-2-full-creation-workflow.md` for the authoritative protocol

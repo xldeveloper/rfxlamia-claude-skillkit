@@ -401,6 +401,8 @@ Comprehensive quality assurance improvements addressing Test Session #3 findings
 | Version | Date | Key Changes |
 |---------|------|-------------|
 | **2.1.0** | 2026-03-13 | Full mode TDD behavioral protocol, deprecate pressure_tester.py |
+| **2.0.1** | 2026-03-06 | Bug fixes: decision_helper, test_generator, pressure_tester stub warning |
+| **2.0.0** | 2025-03-05 | Workflow modes (fast/full), behavioral testing, quality scoring v2 |
 | **1.3.0** | 2025-02-06 | Subagent creation support, 10 tools, 23 knowledge files |
 | **1.2.1** | 2025-11-14 | Bug fixes: imperative detection (11x improvement), confidence calculation, gitignore |
 | **1.2.0** | 2025-11-13 | Quality assurance improvements, 81% of issues fixed, new utilities |
@@ -467,5 +469,5 @@ Changes are tracked through:
 
 ---
 
-**Generated with:** Claude Skill Kit v1.3.0
-**Last Updated:** 2025-02-06
+**Generated with:** Claude Skill Kit v2.1.0
+**Last Updated:** 2026-03-14

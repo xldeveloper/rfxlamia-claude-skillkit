@@ -12,6 +12,9 @@ v2 Update: Legacy mode deprecation
 - Structural-only generation (without --behavioral) is deprecated
 - Preferred: --behavioral with --test-format pytest
 
+v2.1 Note: --behavioral generates test scaffolds only (no pressure_tester.py dependency).
+Real behavioral validation uses the subagent dispatch protocol in section-2.
+
 References: File 12 (testing best practices)
 """
 
@@ -631,7 +634,7 @@ def main():
     parser.add_argument(
         '--behavioral',
         action='store_true',
-        help='Generate behavioral pressure tests (recommended in v2; legacy non-behavioral mode is deprecated)'
+        help='Generate behavioral test scaffolds (v2.1: scaffolds only, real testing uses subagent protocol)'
     )
 
     args = parser.parse_args()

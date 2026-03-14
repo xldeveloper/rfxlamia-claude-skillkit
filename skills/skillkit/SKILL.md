@@ -117,7 +117,7 @@ Phase 6: Refinement (extra vs fast)
 - Step 13: Close loopholes
 
 Phase 7: Packaging
-- Step 14: Quality assessment (`quality_scorer.py --behavioral`)
+- Step 14: Quality assessment (`quality_scorer.py --format json`) — behavioral score derived from Steps 3/7/12 subagent results, not from `--behavioral` flag
 - Step 15: Package (`package_skill.py`)
 
 ### Mode Detection
