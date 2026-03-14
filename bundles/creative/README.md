@@ -2,8 +2,8 @@
 
 > Content creation powerhouse bundle
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/rfxlamia/claude-skillkit)
-[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/rfxlamia/claude-skillkit/blob/main/LICENSE)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/rfxlamia/skillkit)
+[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/rfxlamia/skillkit/blob/main/LICENSE)
 
 Comprehensive content creation bundle for viral threads, storytelling, screenwriting, persuasive copywriting, image prompt optimization, and high-diversity content generation. Includes psychology-backed hooks, databases with 150+ formulas, and evidence-based techniques.
 
@@ -269,7 +269,7 @@ Apache-2.0 - See [LICENSE](../../LICENSE)
 
 ## Repository
 
-https://github.com/rfxlamia/claude-skillkit
+https://github.com/rfxlamia/skillkit
 
 ## Author
 

@@ -2,8 +2,8 @@
 
 > Specialized subagent collection
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/rfxlamia/claude-skillkit)
-[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/rfxlamia/claude-skillkit/blob/main/LICENSE)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/rfxlamia/skillkit)
+[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/rfxlamia/skillkit/blob/main/LICENSE)
 
 Specialized subagent collection for Claude Code. Includes creative copywriting with psychology triggers, SEO content optimization, decision-making agents (velocity-first and safety-first), Kotlin expertise, documentation condensing, and comprehensive security testing.
 
@@ -279,7 +279,7 @@ Apache-2.0 - See [LICENSE](../../LICENSE)
 
 ## Repository
 
-https://github.com/rfxlamia/claude-skillkit
+https://github.com/rfxlamia/skillkit
 
 ## Author
 

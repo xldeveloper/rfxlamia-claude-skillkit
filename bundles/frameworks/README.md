@@ -2,8 +2,8 @@
 
 > Agent capability frameworks for smarter agents
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/rfxlamia/claude-skillkit)
-[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/rfxlamia/claude-skillkit/blob/main/LICENSE)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/rfxlamia/skillkit)
+[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/rfxlamia/skillkit/blob/main/LICENSE)
 
 Architectural frameworks bundle for building AI agents with critical thinking capabilities, implicit intent understanding, and adversarial review protocols. Includes structured reasoning selection, metacognitive monitoring, the STAR framework for preventing literal interpretation traps, and mandatory bug-quota reviews.
 
@@ -257,7 +257,7 @@ Apache-2.0 - See [LICENSE](../../LICENSE)
 
 ## Repository
 
-https://github.com/rfxlamia/claude-skillkit
+https://github.com/rfxlamia/skillkit
 
 ## Author
 
