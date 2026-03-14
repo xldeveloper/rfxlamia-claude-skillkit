@@ -1,6 +1,7 @@
 ---
 name: framework-critical-thinking
 description: Architectural framework for building AI agents with critical thinking capabilities - structured reasoning selection (CoT/ToT/GoT), metacognitive monitoring, self-verification, and cognitive bias detection. Use when building or enhancing AI agents that require reliable, self-correcting, and transparent reasoning.
+category: agent-frameworks
 ---
 
 # Framework Critical Thinking Framework (FCT)

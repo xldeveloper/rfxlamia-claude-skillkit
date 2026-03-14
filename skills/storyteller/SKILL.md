@@ -11,8 +11,9 @@ description: >
   PRIMARY FUNCTION: Bridge the gap between "altar pribadi" (abstract metaphor) and 
   "woman returns daily to same beach spot" (filmable scene).
   
-  OUTPUT: Scene breakdown with concrete visual actions, preserved emotional core, 
+  OUTPUT: Scene breakdown with concrete visual actions, preserved emotional core,
   and story logic documentation.
+category: creative
 ---
 
 # Storyteller Skill

@@ -1,6 +1,7 @@
 ---
 name: validate-plan
 description: Validate implementation plans against DRY, YAGNI, TDD principles and best practices. Use when reviewing development plans created by writing-plans or similar planning workflows to identify gaps, anti-patterns, and improvement opportunities before execution.
+category: planning
 ---
 
 # Validate Plan

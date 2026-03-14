@@ -1,6 +1,7 @@
 ---
 name: framework-initiative
 description: Framework for agents to understand implicit user intent, think before acting, and consider action impact. Uses STAR framework (Stop-Think-Analyze-Respond) to prevent literal execution that doesn't match context. Use when agent receives ambiguous requests, abstract commands like "fix", "improve", "delete all", or actions with potential wide-scope impact. Trigger on code modification requests without explicit scope constraints.
+category: agent-frameworks
 ---
 
 # Agent Initiative Framework

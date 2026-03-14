@@ -18,6 +18,7 @@ description: >
 metadata:
   version: 1.0.0
   author: V (OpenClaw)
+category: quality
 ---
 
 ## Section 1: Protocol Overview

@@ -3,8 +3,9 @@ name: creative-copywriting
 description: >
   Master persuasive writing for social media with proven hooks, storytelling frameworks, and 
   psychological triggers. Includes CSV databases with 150+ hooks, power words, carousel 
-  structures, and emotional triggers specifically optimized for Instagram swipes and X/Twitter 
+  structures, and emotional triggers specifically optimized for Instagram swipes and X/Twitter
   "Read more" clicks. Works with creative-copywriter subagent for intelligent content generation.
+category: creative
 ---
 
 # Creative Copywriting (2025)

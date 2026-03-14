@@ -1,6 +1,7 @@
 ---
 name: imagine
 description: Prepare detailed, professional prompts for Google Imagen 3/4 image generation. Supports character, environment, and object prompts using natural language with technical photography specifications. Extensible support for multiple art styles via reference files.
+category: creative
 ---
 
 # Imagine: Imagen Prompt Architect

@@ -17,6 +17,7 @@ description: >
   OUTPUT: Flowing prose with burstiness, analogies, and occasional absurd touches
   
   CORE PRINCIPLE: Total war on AI rigidity. Destroy robotic tone while preserving technical accuracy.
+category: documentation
 ---
 
 # Humanize Docs

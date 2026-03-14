@@ -18,6 +18,7 @@ description: >
 
   CRITICAL: Agent MUST stop and wait at every STOP gate. Do not proceed without
   explicit user confirmation. No assumptions. No skipping.
+category: productivity
 ---
 
 # Been There Done That

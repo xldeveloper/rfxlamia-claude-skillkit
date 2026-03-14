@@ -8,6 +8,7 @@ description: >
   WORKFLOW: Raw idea → Scene breakdown → Visual enhancement → Professional formatting → XML-tagged markdown output
   
   OUTPUT: Markdown document with XML-wrapped scenes, rich visual descriptions, proper screenplay elements (sluglines, action, dialogue), and metadata for pipeline processing.
+category: creative
 ---
 
 # Screenwriter Skill

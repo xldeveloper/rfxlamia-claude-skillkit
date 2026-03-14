@@ -1,6 +1,7 @@
 ---
 name: quick-spec
 description: Create implementation-ready technical specifications through conversational discovery, code investigation, and structured documentation. USE WHEN user needs to plan a feature, create tech-spec, or prepare implementation-ready documentation. Triggers on "buat spec", "create tech spec", "plan feature", "specification", or when user describes a feature to build without clear implementation plan.
+category: planning
 ---
 
 # Quick Spec

@@ -8,6 +8,7 @@ description: >
   USE WHEN: User says "pre-deploy check", "deploy checklist", "ready to deploy?",
   "generate QA checklist", or any request to verify project readiness before deployment.
 allowed-tools: Read, Glob, Bash, Task, Write
+category: deployment
 ---
 
 # Pre-Deploy Checklist
