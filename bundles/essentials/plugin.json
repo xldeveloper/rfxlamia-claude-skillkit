@@ -7,14 +7,14 @@
     "email": "rfxlamia@github.com"
   },
   "skills": [
-    "../../skills/baby-education",
-    "../../skills/readme-expert",
-    "../../skills/prompt-engineering",
-    "../../skills/humanize-docs",
-    "../../skills/quick-spec",
-    "../../skills/pre-deploy-checklist",
-    "../../skills/been-there-done-that",
-    "../../skills/releasing",
-    "../../skills/verify-before-ship"
+    "skills/baby-education",
+    "skills/readme-expert",
+    "skills/prompt-engineering",
+    "skills/humanize-docs",
+    "skills/quick-spec",
+    "skills/pre-deploy-checklist",
+    "skills/been-there-done-that",
+    "skills/releasing",
+    "skills/verify-before-ship"
   ]
 }
