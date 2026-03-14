@@ -1,8 +1,11 @@
 #!/usr/bin/env node
-import { readdirSync, readFileSync, writeFileSync } from 'fs'
-import { join, resolve } from 'path'
+import { readdirSync, readFileSync, writeFileSync, existsSync } from 'fs'
+import { join, resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
 
-const root = resolve('.')
+const __dirname = dirname(fileURLToPath(import.meta.url))
+// Script is in scripts/, so repo root is one level up
+const root = resolve(__dirname, '..')
 
 // Skills: read name + description + category from SKILL.md frontmatter
 const skills = readdirSync(join(root, 'skills'))
