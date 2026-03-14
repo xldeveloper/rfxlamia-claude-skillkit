@@ -4,11 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.1.5] - 2026-03-14
+
+### Fixed
+- Add plugin.json to skills/skillkit/.claude-plugin/ for proper plugin metadata
+- Commands, skills, and plugin.json now properly colocated
+
 ## [2.1.4] - 2026-03-14
 
 ### Fixed
 - Move commands/ folder to skills/skillkit/ for proper plugin discovery
-- Slash commands (/skillkit, /verify, /validate-plan) now work correctly
 
 ## [2.1.3] - 2026-03-14
 
