@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.3.0] - 2026-03-15
+
+### Added
+- Multi-tool installer support: OpenCode, Codex, and GitHub Copilot alongside Claude Code
+- `tools.js` module with `selectTools` UI and `getToolTargets` path resolver
+- Deduplication logic for shared agent directories (Claude Code + Copilot)
+- Codex always installs to user scope (`~/.agents/skills/skillkit/`) regardless of selection
+- 10 unit tests for tool path resolution, 1 happy-path install test
+
+### Changed
+- Installer subtitle updated to "Multi-Tool Skills Installer"
+- `skillkit` skill now appears first in the manual picker list
+- Everything label now shows dynamic skill/agent counts
+- `selectScope` returns a plain string instead of a path object
+- `installSelected` accepts a `targets[]` array, returns `{ results[], totalInstalled }`
+
+### Removed
+- `releasing-skillkit` skill (moved to local user skills)
+- `getUserScope` / `getProjectScope` helpers from `scope.js`
+
 ## [2.2.0] - 2026-03-15
 
 ### Added
