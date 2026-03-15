@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
-import { getCategoryDisplay } from './picker.js'
+import { getCategoryDisplay, sortSkills } from './picker.js'
 
 test('getCategoryDisplay returns icon and category label', () => {
   const skill = { name: 'test-skill', category: 'creative' }
@@ -21,8 +21,6 @@ test('getCategoryDisplay handles missing category', () => {
 })
 
 // --- sortSkills tests (added for skillkit-help ordering) ---
-import { sortSkills } from './picker.js'
-
 test('skillkit sorts first', () => {
   const skills = [
     { name: 'readme-expert' },

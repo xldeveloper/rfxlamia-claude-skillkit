@@ -63,7 +63,7 @@ python3 skills/skillkit/scripts/decision_helper.py "code review assistant"
 
 ## What is SkillKit?
 
-SkillKit v2 is a plugin for AI agents that provides a collection of **24 skills** and **7 subagents** designed to extend Claude's capabilities across content creation, engineering frameworks, security testing, and more.
+SkillKit v2 is a plugin for AI agents that provides a collection of **25 skills** and **7 subagents** designed to extend Claude's capabilities across content creation, engineering frameworks, security testing, and more.
 
 At its core, SkillKit v2 includes a **meta-skill** (`skillkit`) that helps create and validate new skills/subagents using a dual-mode workflow:
 - **Fast mode** for quick structural validation
@@ -84,34 +84,35 @@ At its core, SkillKit v2 includes a **meta-skill** (`skillkit`) that helps creat
 ## Skills Catalog
 
 <details>
-<summary>24 skills — click to expand</summary>
+<summary>25 skills — click to expand</summary>
 
 | # | Skill | Description |
 |---|-------|-------------|
 | 1 | **skillkit** | Meta-skill for creating new skills and subagents with dual-mode (12-step fast, 15-step full) workflow |
-| 2 | **prompt-engineering** | Select optimal prompting methods (CoT, Few-Shot, ReAct, ToT) and output formats based on task complexity |
-| 3 | **creative-copywriting** | Persuasive social media writing with 150+ psychological triggers, hook formulas, and storytelling frameworks |
-| 4 | **social-media-seo** | Optimize social media content for discoverability with 100+ formula databases across Instagram, X/Twitter, and Threads |
-| 5 | **thread-pro** | Transform content into viral threads with strong hooks and relatable voice for X/Twitter and Threads |
-| 6 | **humanize-docs** | Transform AI-to-AI documentation into human-readable prose with personality |
-| 7 | **imagine** | Prepare detailed prompts for Google Imagen 3/4 image generation with technical photography specs |
-| 8 | **storyteller** | Transform abstract narratives into concrete visual story structures |
-| 9 | **screenwriter** | Create production-ready screenplays optimized for AI video generation pipelines |
-| 10 | **diverse-content-gen** | Generate diverse creative content using Verbalized Sampling (1.6-2.1x diversity increase) |
-| 11 | **coolhunter** | Trend intelligence and cultural signal detection for emerging behaviors |
-| 12 | **framework-critical-thinking** | Build AI agents with critical thinking, metacognition, and self-verification capabilities |
-| 13 | **framework-initiative** | STAR framework for agents to understand implicit intent and think before acting |
-| 14 | **baby-education** | Explain concepts with extreme clarity using analogies-first approach and ELI5 style |
-| 15 | **readme-expert** | Create README files with anti-hallucination validation and codebase-grounded accuracy |
-| 16 | **red-teaming** | Adversarial security testing methodology for cybersecurity and AI/LLM systems |
-| 17 | **tinkering** | Safe experimentation framework with isolated sandboxes for prototyping and technical spikes |
-| 18 | **quick-spec** | Create implementation-ready technical specifications through conversational discovery and code investigation |
-| 19 | **pre-deploy-checklist** | Intelligent pre-deployment QA checklist generator with parallel domain subagent analysis |
-| 20 | **been-there-done-that** | Document developer progress objectively after sprints with git session detection and factual logging |
-| 21 | **adversarial-review** | Adversarial review protocol with mandatory bug quota, reality validation, and structured resolution paths |
-| 22 | **releasing** | Automate release workflow: version bumping, changelog generation, git tagging, and GitHub releases |
-| 23 | **validate-plan** | Validate implementation plans against DRY, YAGNI, TDD principles before execution |
-| 24 | **verify-before-ship** | Enforce 7 production safety gates with evidence before deployment |
+| 2 | **skillkit-help** | Pre-build orientation for skill creators — understand what skills are, decide skills vs subagents, validate an existing skill |
+| 3 | **prompt-engineering** | Select optimal prompting methods (CoT, Few-Shot, ReAct, ToT) and output formats based on task complexity |
+| 4 | **creative-copywriting** | Persuasive social media writing with 150+ psychological triggers, hook formulas, and storytelling frameworks |
+| 5 | **social-media-seo** | Optimize social media content for discoverability with 100+ formula databases across Instagram, X/Twitter, and Threads |
+| 6 | **thread-pro** | Transform content into viral threads with strong hooks and relatable voice for X/Twitter and Threads |
+| 7 | **humanize-docs** | Transform AI-to-AI documentation into human-readable prose with personality |
+| 8 | **imagine** | Prepare detailed prompts for Google Imagen 3/4 image generation with technical photography specs |
+| 9 | **storyteller** | Transform abstract narratives into concrete visual story structures |
+| 10 | **screenwriter** | Create production-ready screenplays optimized for AI video generation pipelines |
+| 11 | **diverse-content-gen** | Generate diverse creative content using Verbalized Sampling (1.6-2.1x diversity increase) |
+| 12 | **coolhunter** | Trend intelligence and cultural signal detection for emerging behaviors |
+| 13 | **framework-critical-thinking** | Build AI agents with critical thinking, metacognition, and self-verification capabilities |
+| 14 | **framework-initiative** | STAR framework for agents to understand implicit intent and think before acting |
+| 15 | **baby-education** | Explain concepts with extreme clarity using analogies-first approach and ELI5 style |
+| 16 | **readme-expert** | Create README files with anti-hallucination validation and codebase-grounded accuracy |
+| 17 | **red-teaming** | Adversarial security testing methodology for cybersecurity and AI/LLM systems |
+| 18 | **tinkering** | Safe experimentation framework with isolated sandboxes for prototyping and technical spikes |
+| 19 | **quick-spec** | Create implementation-ready technical specifications through conversational discovery and code investigation |
+| 20 | **pre-deploy-checklist** | Intelligent pre-deployment QA checklist generator with parallel domain subagent analysis |
+| 21 | **been-there-done-that** | Document developer progress objectively after sprints with git session detection and factual logging |
+| 22 | **adversarial-review** | Adversarial review protocol with mandatory bug quota, reality validation, and structured resolution paths |
+| 23 | **releasing** | Automate release workflow: version bumping, changelog generation, git tagging, and GitHub releases |
+| 24 | **validate-plan** | Validate implementation plans against DRY, YAGNI, TDD principles before execution |
+| 25 | **verify-before-ship** | Enforce 7 production safety gates with evidence before deployment |
 
 </details>
 
