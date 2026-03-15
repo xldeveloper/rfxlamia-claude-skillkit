@@ -4,14 +4,24 @@
 
 SkillKit is an open toolkit for creating reusable skills that extend how your AI agent works. Works across Claude Code, OpenAI Codex, and other AI coding tools. Install community-built skills in seconds, or create your own in ~10 minutes and contribute them back.
 
-> Not sure what skills are or if you need one? Run `/skillkit-help` first.
-> Ready to build? Run `/skillkit`.
-
 > **Previously known as `claude-skillkit`.** All old links redirect here automatically.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-2.1.6-green.svg)](.claude-plugin/plugin.json)
 [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-%E2%9D%A4-red?logo=githubsponsors)](https://github.com/sponsors/rfxlamia)
+
+---
+
+## What is SkillKit?
+
+SkillKit is a plugin for AI agents that provides a collection of **25 skills** and **7 subagents** designed to extend Claude's capabilities across content creation, engineering frameworks, security testing, and more.
+
+At its core, SkillKit includes a **meta-skill** (`skillkit`) that helps create and validate new skills/subagents using a dual-mode workflow:
+- **Fast mode** for quick structural validation
+- **Full mode** for structural + behavioral validation with TDD-style pressure testing
+
+> Not sure what skills are or if you need one? Run `/skillkit-help` first.
+> Ready to build? Run `/skillkit`.
 
 ---
 
@@ -23,11 +33,8 @@ npx @rfxlamia/skillkit
 
 Interactive installer — pick skills/agents, choose user or project scope. Done.
 
-![SkillKit installer](docs/images/installer.png)
-
 <details>
 <summary>Other install methods</summary>
-
 **Manual (Clone + Copy)**
 
 ```bash
@@ -41,33 +48,6 @@ cp skillkit/agents/. ~/.claude/agents/
 > **⚠️ Known issue:** Installation via the Claude Code plugin marketplace is currently broken. The `disable-model-invocation` error prevents skills from being invoked after install. Use `npx` instead.
 
 </details>
-
----
-
-## Quick Start
-
-```
-/skillkit create skill "my-awesome-skill"
-/skillkit create subagent "my-subagent"
-```
-
-```bash
-# Validate a skill
-python3 skills/skillkit/scripts/validate_skill.py path/to/skill/ --format json
-
-# Decide: skill vs subagent?
-python3 skills/skillkit/scripts/decision_helper.py "code review assistant"
-```
-
----
-
-## What is SkillKit?
-
-SkillKit v2 is a plugin for AI agents that provides a collection of **25 skills** and **7 subagents** designed to extend Claude's capabilities across content creation, engineering frameworks, security testing, and more.
-
-At its core, SkillKit v2 includes a **meta-skill** (`skillkit`) that helps create and validate new skills/subagents using a dual-mode workflow:
-- **Fast mode** for quick structural validation
-- **Full mode** for structural + behavioral validation with TDD-style pressure testing
 
 ---
 
@@ -183,13 +163,13 @@ Quality target: **9.0+/10** via 5-layer validation and multi-proposal generation
 
 <!-- TODO: Replace with actual screenshots -->
 **CLI installer**
-`npx @rfxlamia/skillkit` → interactive skill picker
+![installer](/home/v/project/skillkit/docs/images/installer.png)
 
 **Guided orientation**
-`/skillkit-help` → understand skills and decide if you need one
+![skillkit-help](/home/v/project/skillkit/docs/images/skillkit-help.png)
 
 **A finished skill**
-`skills/imagine/SKILL.md` → example of a complete skill
+![skill](/home/v/project/skillkit/docs/images/skill.png)
 
 ---
 
