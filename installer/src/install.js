@@ -25,7 +25,7 @@ export async function installSelected({ skills, agents }, targets) {
     if (target.skillsDir) {
       for (const skill of skills) {
         if (!skill.name || !skill.path) {
-          skipped.push(`invalid-skill-${installed}`)
+          skipped.push(`invalid-skill-${skipped.length}`)
           continue
         }
         const src = join(PACKAGE_ROOT, skill.path)
@@ -40,7 +40,7 @@ export async function installSelected({ skills, agents }, targets) {
     if (target.agentsDir) {
       for (const agent of agents) {
         if (!agent.name || !agent.path) {
-          skipped.push(`invalid-agent-${installed}`)
+          skipped.push(`invalid-agent-${skipped.length}`)
           continue
         }
         const src = join(PACKAGE_ROOT, agent.path)

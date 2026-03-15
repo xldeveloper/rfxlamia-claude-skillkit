@@ -4,7 +4,8 @@ import assert from 'node:assert'
 import { selectScope } from './scope.js'
 
 test('selectScope is an async function', () => {
-  assert.strictEqual(typeof selectScope, 'function')
+  const AsyncFunction = (async () => {}).constructor
+  assert.ok(selectScope instanceof AsyncFunction)
 })
 
 test('getUserScope and getProjectScope are no longer exported', async () => {

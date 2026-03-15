@@ -1,10 +1,14 @@
 // installer/src/install.test.js
 import { test } from 'node:test'
 import assert from 'node:assert'
-import { mkdtempSync, writeFileSync, mkdirSync, existsSync, rmSync, cpSync } from 'fs'
-import { join } from 'path'
+import { mkdtempSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'fs'
+import { join, dirname } from 'path'
 import { tmpdir } from 'os'
+import { fileURLToPath } from 'url'
 import { installSelected } from './install.js'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const PACKAGE_ROOT = join(__dirname, '..')
 
 function createTempDir() {
   return mkdtempSync(join(tmpdir(), 'skillkit-test-'))
@@ -80,4 +84,25 @@ test('installSelected skips agents when agentsDir is null', async () => {
   assert.strictEqual(results[0].target.agentsDir, null)
 
   rmSync(skillsDir, { recursive: true })
+})
+
+test('installSelected copies skill directory to destination (happy path)', async () => {
+  // Create a source skill directory inside PACKAGE_ROOT (same as install.js uses)
+  const fixtureDir = join(PACKAGE_ROOT, '.test-fixture', 'my-test-skill')
+  mkdirSync(fixtureDir, { recursive: true })
+  writeFileSync(join(fixtureDir, 'SKILL.md'), '# Test Skill')
+
+  const destDir = createTempDir()
+
+  const { totalInstalled, results } = await installSelected(
+    { skills: [{ name: 'my-test-skill', path: '.test-fixture/my-test-skill' }], agents: [] },
+    [makeTarget(destDir, null)]
+  )
+
+  assert.strictEqual(totalInstalled, 1)
+  assert.strictEqual(results[0].installed, 1)
+  assert.ok(existsSync(join(destDir, 'my-test-skill', 'SKILL.md')))
+
+  rmSync(join(PACKAGE_ROOT, '.test-fixture'), { recursive: true })
+  rmSync(destDir, { recursive: true })
 })
