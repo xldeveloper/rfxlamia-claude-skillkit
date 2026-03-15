@@ -113,13 +113,6 @@
       "path": "skills/releasing"
     },
     {
-      "name": "releasing-skillkit",
-      "description": "Complete release checklist for SkillKit project. Performs pre-release verification,",
-      "category": "deployment",
-      "type": "skill",
-      "path": "skills/releasing-skillkit"
-    },
-    {
       "name": "screenwriter",
       "description": "Transform creative ideas into professional, production-ready screenplays optimized for AI video generation pipelines. Converts raw concepts into structured scene-by-scene narratives with rich visual descriptions, proper screenplay formatting, and XML-tagged output for seamless integration with image/video generation tools (imagine, arch-v).",
       "category": "creative",
@@ -220,5 +213,5 @@
       "path": "agents/seo-manager.md"
     }
   ],
-  "generatedAt": "2026-03-14T23:07:12.454Z"
+  "generatedAt": "2026-03-15T04:22:20.593Z"
 }
