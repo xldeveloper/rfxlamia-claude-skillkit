@@ -127,6 +127,13 @@
       "path": "skills/skillkit"
     },
     {
+      "name": "skillkit-help",
+      "description": "Guided onboarding for new skill creators. Interactive path from zero to",
+      "category": "core",
+      "type": "skill",
+      "path": "skills/skillkit-help"
+    },
+    {
       "name": "social-media-seo",
       "description": "Optimize social media content for maximum discoverability and engagement using 2025-proven SEO strategies.",
       "category": "creative",
