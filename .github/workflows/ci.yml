@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
       - run: cd installer && npm ci
       - run: cd installer && npm test
 
@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
       - run: cd installer && npm ci
       - run: cd installer && npx eslint src/
 
@@ -38,6 +38,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
       - run: node scripts/generate-manifest.js
       - run: git diff --exit-code installer/skills-manifest.json
