@@ -20,5 +20,6 @@ test_result/
 
 # plan
 docs/plans/
+docs/superpowers/
 .worktrees/
 worktrees/
