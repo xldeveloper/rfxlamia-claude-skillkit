@@ -128,7 +128,7 @@
     },
     {
       "name": "skillkit-help",
-      "description": "Guided onboarding for new skill creators. Interactive path from zero to",
+      "description": "Pre-build orientation for skill creators. Answers \"what are skills?\",",
       "category": "core",
       "type": "skill",
       "path": "skills/skillkit-help"
