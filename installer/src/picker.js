@@ -27,6 +27,16 @@ export function getCategoryDisplay(skill) {
   return `${icon} ${label}`
 }
 
+export function sortSkills(skills) {
+  return [...skills].sort((a, b) => {
+    if (a.name === 'skillkit') return -1
+    if (b.name === 'skillkit') return 1
+    if (a.name === 'skillkit-help') return -1
+    if (b.name === 'skillkit-help') return 1
+    return a.name.localeCompare(b.name)
+  })
+}
+
 export async function pickInstallables() {
   const mode = await select({
     message: 'What to install?',
@@ -42,11 +52,7 @@ export async function pickInstallables() {
   if (mode === 'skills-only') return { skills: manifest.skills, agents: [] }
   if (mode === 'agents-only') return { skills: [], agents: manifest.agents }
 
-  const sortedSkills = [...manifest.skills].sort((a, b) => {
-    if (a.name === 'skillkit') return -1
-    if (b.name === 'skillkit') return 1
-    return a.name.localeCompare(b.name)
-  })
+  const sortedSkills = sortSkills(manifest.skills)
 
   const skillChoices = sortedSkills.map(s => ({
     value: s.name,

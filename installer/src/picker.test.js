@@ -19,3 +19,40 @@ test('getCategoryDisplay handles missing category', () => {
   const result = getCategoryDisplay(skill)
   assert.strictEqual(result, '   ')
 })
+
+// --- sortSkills tests (added for skillkit-help ordering) ---
+import { sortSkills } from './picker.js'
+
+test('skillkit sorts first', () => {
+  const skills = [
+    { name: 'readme-expert' },
+    { name: 'skillkit' },
+    { name: 'adversarial-review' }
+  ]
+  const sorted = sortSkills(skills)
+  assert.strictEqual(sorted[0].name, 'skillkit')
+})
+
+test('skillkit-help sorts second', () => {
+  const skills = [
+    { name: 'readme-expert' },
+    { name: 'skillkit-help' },
+    { name: 'skillkit' },
+    { name: 'adversarial-review' }
+  ]
+  const sorted = sortSkills(skills)
+  assert.strictEqual(sorted[0].name, 'skillkit')
+  assert.strictEqual(sorted[1].name, 'skillkit-help')
+})
+
+test('remaining skills sort alphabetically', () => {
+  const skills = [
+    { name: 'readme-expert' },
+    { name: 'skillkit' },
+    { name: 'adversarial-review' },
+    { name: 'skillkit-help' }
+  ]
+  const sorted = sortSkills(skills)
+  assert.strictEqual(sorted[2].name, 'adversarial-review')
+  assert.strictEqual(sorted[3].name, 'readme-expert')
+})
