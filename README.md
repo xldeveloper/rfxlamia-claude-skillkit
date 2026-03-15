@@ -1,7 +1,12 @@
 # SkillKit
 
-> Professional skill and agent creation toolkit for AI agents. Works across Claude Code, OpenAI Codex, and other AI coding tools. Features dual-mode workflow (fast/full), behavioral validation, and multi-layer quality gates for achieving 9.0/10+ quality scores.
->
+**Build custom skills for your AI workflow agent — and share them with thousands.**
+
+SkillKit is an open toolkit for creating reusable skills that extend how your AI agent works. Works across Claude Code, OpenAI Codex, and other AI coding tools. Install community-built skills in seconds, or create your own in ~10 minutes and contribute them back.
+
+> Not sure what skills are or if you need one? Run `/skillkit-help` first.
+> Ready to build? Run `/skillkit`.
+
 > **Previously known as `claude-skillkit`.** All old links redirect here automatically.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
@@ -63,6 +68,16 @@ SkillKit v2 is a plugin for AI agents that provides a collection of **24 skills*
 At its core, SkillKit v2 includes a **meta-skill** (`skillkit`) that helps create and validate new skills/subagents using a dual-mode workflow:
 - **Fast mode** for quick structural validation
 - **Full mode** for structural + behavioral validation with TDD-style pressure testing
+
+---
+
+## Create Your First Skill
+
+1. Install SkillKit: `npx @rfxlamia/skillkit`
+2. Run `/skillkit-help` and follow the guided path — you'll have a working skill in ~10 minutes
+3. Submit a PR to share it with the community
+
+[Starter template](skills/skillkit-help/template/SKILL.md) · [Contribution guide](.github/PULL_REQUEST_TEMPLATE/skill_submission.md)
 
 ---
 
@@ -160,6 +175,20 @@ Quality target: **9.0+/10** via 5-layer validation and multi-proposal generation
 | `quick_validate.py` | Quick validation checks |
 
 </details>
+
+---
+
+## Screenshots
+
+<!-- TODO: Replace with actual screenshots -->
+**CLI installer**
+`npx @rfxlamia/skillkit` → interactive skill picker
+
+**Guided orientation**
+`/skillkit-help` → understand skills and decide if you need one
+
+**A finished skill**
+`skills/imagine/SKILL.md` → example of a complete skill
 
 ---
 
