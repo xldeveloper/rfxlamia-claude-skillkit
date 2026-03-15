@@ -10,18 +10,49 @@
 
 ---
 
-## Table of Contents
+## Installation
 
-- [What is SkillKit?](#what-is-skillkit)
-- [Skills Catalog](#skills-catalog)
-- [Subagents Catalog](#subagents-catalog)
-- [Core: SkillKit Creator](#core-skillkit-creator)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Automation Scripts](#automation-scripts)
-- [Knowledge Base](#knowledge-base)
-- [Project Structure](#project-structure)
-- [License](#license)
+```bash
+npx @rfxlamia/skillkit
+```
+
+Interactive installer — pick skills/agents, choose user or project scope. Done.
+
+![SkillKit installer](docs/images/installer.png)
+
+<details>
+<summary>Other install methods</summary>
+
+**Manual (Clone + Copy)**
+
+```bash
+git clone https://github.com/rfxlamia/skillkit.git
+cp -r skillkit/skills/. ~/.claude/skills/
+cp skillkit/agents/. ~/.claude/agents/
+```
+
+**Plugin Marketplace (Currently Broken)**
+
+> **⚠️ Known issue:** Installation via the Claude Code plugin marketplace is currently broken. The `disable-model-invocation` error prevents skills from being invoked after install. Use `npx` instead.
+
+</details>
+
+---
+
+## Quick Start
+
+```
+/skillkit create skill "my-awesome-skill"
+/skillkit create subagent "my-subagent"
+```
+
+```bash
+# Validate a skill
+python3 skills/skillkit/scripts/validate_skill.py path/to/skill/ --format json
+
+# Decide: skill vs subagent?
+python3 skills/skillkit/scripts/decision_helper.py "code review assistant"
+```
 
 ---
 
@@ -33,11 +64,12 @@ At its core, SkillKit v2 includes a **meta-skill** (`skillkit`) that helps creat
 - **Fast mode** for quick structural validation
 - **Full mode** for structural + behavioral validation with TDD-style pressure testing
 
-In short, SkillKit v2 is a practical system for building reliable Claude capabilities with repeatable quality gates, not just a template pack.
-
 ---
 
 ## Skills Catalog
+
+<details>
+<summary>24 skills — click to expand</summary>
 
 | # | Skill | Description |
 |---|-------|-------------|
@@ -66,9 +98,12 @@ In short, SkillKit v2 is a practical system for building reliable Claude capabil
 | 23 | **validate-plan** | Validate implementation plans against DRY, YAGNI, TDD principles before execution |
 | 24 | **verify-before-ship** | Enforce 7 production safety gates with evidence before deployment |
 
----
+</details>
 
 ## Subagents Catalog
+
+<details>
+<summary>7 subagents — click to expand</summary>
 
 | # | Subagent | Description |
 |---|----------|-------------|
@@ -80,13 +115,13 @@ In short, SkillKit v2 is a practical system for building reliable Claude capabil
 | 6 | **dario-amodei** | Safety-first decision-making with transparency, intellectual rigor, and democratic oversight |
 | 7 | **kotlin-pro** | Kotlin code review, refactoring, and coroutines/Flow optimization |
 
+</details>
+
 ---
 
 ## Core: SkillKit Creator
 
 The `skillkit` skill is the engine that powers creation of new skills and subagents.
-
-### Workflows
 
 | Trigger | Workflow | Steps |
 |---------|----------|-------|
@@ -96,76 +131,16 @@ The `skillkit` skill is the engine that powers creation of new skills and subage
 | `Skills vs Subagents` | Decision helper | Recommends approach, then creates |
 | `convert doc to skill` | Migration | Transform existing docs into skills |
 
-### Quality Targets
-
-- Quality score: **9.0+/10**
-- 5-layer validation with automated checks
-- Research phase with 3-5 web searches before building
-- Multi-proposal generation (3-5 design options)
-
----
-
-## Installation
-
-### Install via npx (Recommended)
-
-```bash
-npx @rfxlamia/skillkit
-```
-
-Interactive installer — pick skills/agents, choose user or project scope. Done.
-
-### Manual (Clone + Copy)
-
-```bash
-git clone https://github.com/rfxlamia/skillkit.git
-cp -r skillkit/skills/. ~/.claude/skills/
-cp skillkit/agents/. ~/.claude/agents/
-```
-
-### Plugin Marketplace (Currently Broken)
-
-> **⚠️ Known issue:** Installation via the Claude Code plugin marketplace is currently broken and under investigation. The `disable-model-invocation` error prevents skills from being invoked after install. Use the method above instead.
-
-```bash
-# These commands work but the installed skills fail to run:
-claude plugin marketplace add rfxlamia/skillkit
-claude plugin install skillkit-core
-```
-
----
-
-## Quick Start
-
-### Create a New Skill
-
-```
-/skillkit create skill "my-awesome-skill"
-```
-
-### Create a New Subagent
-
-```
-/skillkit create subagent "my-subagent"
-```
-
-### Validate an Existing Skill
-
-```bash
-python3 skills/skillkit/scripts/validate_skill.py path/to/skill/ --format json
-```
-
-### Decide: Skill vs Subagent?
-
-```bash
-python3 skills/skillkit/scripts/decision_helper.py "code review assistant"
-```
+Quality target: **9.0+/10** via 5-layer validation and multi-proposal generation.
 
 ---
 
 ## Automation Scripts
 
-14 Python scripts in `skills/skillkit/scripts/` for skill lifecycle management:
+14 Python scripts in `skills/skillkit/scripts/` — all support `--format {text|json}`.
+
+<details>
+<summary>View all scripts</summary>
 
 | Script | Purpose |
 |--------|---------|
@@ -184,71 +159,13 @@ python3 skills/skillkit/scripts/decision_helper.py "code review assistant"
 | `package_skill.py` | Package skill for distribution |
 | `quick_validate.py` | Quick validation checks |
 
-All scripts support `--format {text|json}` for standardized output.
+</details>
 
 ---
 
 ## Knowledge Base
 
-23 knowledge files organized in `skills/skillkit/knowledge/`:
-
-| Category | Files | Topics |
-|----------|-------|--------|
-| **Foundation** (01-08) | 8 files | Why skills exist, Skills vs Subagents comparison, decision trees, hybrid patterns, token economics, platform constraints, security, when not to use skills |
-| **Application** (09-13) | 5 files | Case studies, technical architecture, adoption strategy, testing and validation, competitive landscape |
-| **Tools** (14-23) | 10 files | Guides for each automation script |
-
-See [`skills/skillkit/knowledge/INDEX.md`](skills/skillkit/knowledge/INDEX.md) for the full navigation guide.
-
----
-
-## Project Structure
-
-```
-skillkit/
-├── .claude-plugin/
-│   ├── plugin.json            # Plugin metadata (v2.1.0)
-│   └── marketplace.json       # Marketplace listing
-├── skills/
-│   ├── skillkit/              # Meta-skill: create skills & subagents
-│   │   ├── SKILL.md           # Main skill definition
-│   │   ├── CHANGELOG.md       # Version history
-│   │   ├── scripts/           # 14 automation scripts
-│   │   ├── knowledge/         # 23 knowledge files
-│   │   └── references/        # Workflow documentation
-│   ├── prompt-engineering/    # Prompting method selector
-│   ├── creative-copywriting/  # Social media copywriting
-│   ├── social-media-seo/      # SEO optimization with databases
-│   ├── thread-pro/            # Viral thread creation
-│   ├── humanize-docs/         # AI-to-human doc transformation
-│   ├── imagine/               # Image generation prompts
-│   ├── storyteller/           # Narrative to visual structure
-│   ├── screenwriter/          # Screenplay creation
-│   ├── diverse-content-gen/   # Verbalized Sampling technique
-│   ├── coolhunter/            # Trend intelligence
-│   ├── framework-critical-thinking/  # Agent critical thinking
-│   ├── framework-initiative/  # STAR framework for agents
-│   ├── baby-education/        # ELI5 explanations
-│   ├── readme-expert/         # README creation & validation
-│   ├── red-teaming/           # Security red teaming
-│   ├── tinkering/             # Experimentation sandbox framework
-│   ├── quick-spec/            # Technical spec creation
-│   ├── pre-deploy-checklist/  # Pre-deployment QA checklist
-│   ├── been-there-done-that/  # Developer progress logging
-│   ├── adversarial-review/    # Adversarial review protocol
-│   ├── releasing/             # Release workflow automation
-│   ├── validate-plan/         # Plan validation (DRY/YAGNI/TDD)
-│   └── verify-before-ship/    # Pre-deployment safety gates
-├── agents/
-│   ├── seo-manager.md
-│   ├── creative-copywriter.md
-│   ├── red-team.md
-│   ├── doc-simplifier.md
-│   ├── sam-altman.md
-│   ├── dario-amodei.md
-│   └── kotlin-pro.md
-└── LICENSE                    # Apache 2.0
-```
+23 knowledge files in `skills/skillkit/knowledge/` — see [`INDEX.md`](skills/skillkit/knowledge/INDEX.md) for the full navigation guide.
 
 ---
 
