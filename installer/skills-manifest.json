@@ -121,7 +121,7 @@
     },
     {
       "name": "skillkit",
-      "description": "Research-driven toolkit for creating and validating skills and subagents with",
+      "description": "Toolkit for creating and validating skills and subagents.",
       "category": "core",
       "type": "skill",
       "path": "skills/skillkit"
