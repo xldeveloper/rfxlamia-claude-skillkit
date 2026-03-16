@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.5.0] - 2026-03-16
+
+### Added
+- `section-2-fast-creation-workflow.md`: dedicated reference file for fast mode creation workflow (12 steps, 4 phases), making fast and full modes equally documented
+
+### Changed
+- `skillkit` SKILL.md: rewritten for symmetry — both Workflow A (fast) and Workflow B (full) now use identical summary+pointer format pointing to their respective reference files
+- `skillkit` SKILL.md: frontmatter description updated with explicit WHAT/WHEN/triggers for better routing
+- `skillkit` SKILL.md: reduced from 511 to 426 lines (bloat reduction, removed inline Python code block, condensed Section 8)
+- `section-4-decision-workflow-skills-vs-subagents.md`: bash invocation block moved here from SKILL.md inline
+- Quality score improved from 5.5/10 to 7.0/10
+
+---
+
 ## [2.4.0] - 2026-03-15
 
 ### Added
