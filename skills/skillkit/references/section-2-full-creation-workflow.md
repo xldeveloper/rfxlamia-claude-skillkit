@@ -159,7 +159,7 @@ AFTER user approves proposal (Step 1e):
 
 **Options:**
 A. `python scripts/migration_helper.py doc.md --format json` (if doc exists)
-B. `python scripts/init_skill.py skill-name --path /home/claude` (Anthropic standard)
+B. `python scripts/init.py skill skill-name --path /home/claude` (Anthropic standard)
 C. Manual folder creation
 
 **Guide:** `knowledge/tools/22-migration-helper.md`
@@ -306,7 +306,7 @@ BEFORE running validate_skill.py (Step 3):
 
 ### STEP 4: Security
 
-**Tool:** `python scripts/security_scanner.py skill-name/ --format json`
+**Tool:** `python scripts/validate_skill.py skill-name/ --security-only --format json`
 
 **Gates:**
 - IF no critical -> PROCEED Step 5
@@ -317,7 +317,7 @@ BEFORE running validate_skill.py (Step 3):
 
 ### STEP 5: Tokens
 
-**Tool:** `python scripts/token_estimator.py skill-name/ --format json`
+**Tool:** `python scripts/validate_skill.py skill-name/ --tokens-only --format json`
 
 **Gates:**
 - <3000 tokens -> PROCEED Step 6
