@@ -922,7 +922,13 @@ def main():
             'results': validator.results,
             'exit_code': validator.get_exit_code()
         }
-        exit_code = max(exit_code, validator.get_exit_code())
+        # Only fail on warnings if strict mode is enabled
+        has_failures = any(r.severity == Severity.FAIL for r in validator.results)
+        has_warnings = any(r.severity == Severity.WARNING for r in validator.results)
+        if has_failures:
+            exit_code = max(exit_code, 2)
+        elif has_warnings and args.strict:
+            exit_code = max(exit_code, 1)
 
     # Run security scan
     if run_security:
