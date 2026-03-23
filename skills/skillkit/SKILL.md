@@ -67,13 +67,13 @@ Phase 1: Decision & Research
 - Stop Condition: Stop and request user approval before continuing to Step 3.
 
 Phase 2: Creation
-- Step 3: Initialize skill (`init_skill.py --mode fast`)
+- Step 3: Initialize skill (`init.py skill <name> --mode fast`)
 - Step 4: Create content
 
 Phase 3: Structural Validation
 - Step 5: Validate structure (`validate_skill.py`)
-- Step 6: Security audit (`security_scanner.py`)
-- Step 7: Token optimization (`token_estimator.py`)
+- Step 6: Security audit (`validate_skill.py --security-only`)
+- Step 7: Token optimization (`validate_skill.py --tokens-only`)
 
 Phase 4: Packaging
 - Step 8: Progressive disclosure check
@@ -101,7 +101,7 @@ Phase 2: Behavioral Baseline (extra vs fast)
 - Step 4: Document baseline failures
 
 Phase 3: Creation
-- Step 5: Initialize skill (`init_skill.py --mode full`)
+- Step 5: Initialize skill (`init.py skill <name> --mode full`)
 - Step 6: Create content addressing baseline failures
 
 Phase 4: Behavioral Verification (extra vs fast)
@@ -138,8 +138,8 @@ Priority order:
 
 **Steps:** Execute validation subset (Steps 3-8)
 1. Structure validation (validate_skill.py)
-2. Security audit (security_scanner.py)
-3. Token analysis (token_estimator.py)
+2. Security audit (validate_skill.py --security-only)
+3. Token analysis (validate_skill.py --tokens-only)
 4. Progressive disclosure check
 5. Test generation (optional)
 6. Quality assessment (quality_scorer.py)
@@ -185,7 +185,7 @@ Priority order:
 - Choose subagent_type from predefined list
 
 **STEP 1: Initialize Subagent File**
-- Tool: `python scripts/init_subagent.py subagent-name --path ~/.claude/agents`
+- Tool: `python scripts/init.py subagent subagent-name --path ~/.claude/agents`
 - Creates: `~/.claude/agents/subagent-name.md` with template
 - **Important:** Subagents are individual `.md` files (not directories)
 - Stop Condition: If target file already exists, stop and ask whether to overwrite, rename, or cancel.
@@ -260,13 +260,13 @@ Guide: `knowledge/tools/14-validation-tools-guide.md`
 
 **Token Estimator:**
 ```bash
-python scripts/token_estimator.py skill-name/ --format json
+python scripts/validate_skill.py skill-name/ --tokens-only --format json
 ```
 Guide: `knowledge/tools/15-cost-tools-guide.md`
 
 **Security Scanner:**
 ```bash
-python scripts/security_scanner.py skill-name/ --format json
+python scripts/validate_skill.py skill-name/ --security-only --format json
 ```
 Guide: `knowledge/tools/16-security-tools-guide.md`
 
@@ -326,7 +326,7 @@ Guide: `knowledge/tools/22-migration-helper-guide.md`
 
 **Subagent Initializer (NEW):**
 ```bash
-python scripts/init_subagent.py subagent-name --path /path/to/subagents
+python scripts/init.py subagent subagent-name --path /path/to/subagents
 ```
 Guide: `references/section-6-subagent-creation-workflow.md`
 
