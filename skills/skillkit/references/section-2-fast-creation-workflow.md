@@ -111,49 +111,29 @@ echo "Lines: $lines"
 
 ## Phase 3: Structural Validation
 
-### STEP 5: Validate Structure
+### STEP 5: Validate Skill
 
 **Tool:** `python3 scripts/validate_skill.py skill-name/ --format json`
 
-**Gates:**
-- IF success → PROCEED Step 6
-- IF critical errors → FIX, re-run
-- IF warnings only → REVIEW with user
-
-**Guide:** `knowledge/tools/14-validation-tools-guide.md`
-
----
-
-### STEP 6: Security Audit
-
-**Tool:** `python3 scripts/validate_skill.py skill-name/ --security-only --format json`
+Runs structure validation + security scan + token analysis in one call. No flags needed for workflow use.
+(`--security-only` and `--tokens-only` flags are for Section 7 individual tool use only.)
 
 **Gates:**
-- IF no critical → PROCEED Step 7
-- IF critical → FIX immediately, re-run
-- IF medium → DOCUMENT and fix
+- Structure failures → FIX, re-run
+- Structure warnings only → REVIEW with user, PROCEED Step 6
+- Security CRITICAL findings → FIX immediately, re-run
+- Security MEDIUM findings → DOCUMENT and fix
+- Tokens <3000 → PROCEED Step 6
+- Tokens 3000–5000 → CONSIDER splitting
+- Tokens >5000 → MUST split via `scripts/split_skill.py` before proceeding
 
-**Knowledge:** `knowledge/foundation/07-security-concerns.md`
-
----
-
-### STEP 7: Token Optimization
-
-**Tool:** `python3 scripts/validate_skill.py skill-name/ --tokens-only --format json`
-
-**Gates:**
-- <3000 tokens → PROCEED Step 8
-- 3000–5000 → CONSIDER splitting
-- >5000 → MUST split via `scripts/split_skill.py`
-
-**Knowledge:** `knowledge/foundation/05-token-economics.md`
-**Guide:** `knowledge/tools/15-cost-tools-guide.md`
+**Guides:** `knowledge/tools/14-validation-tools-guide.md`, `knowledge/tools/15-cost-tools-guide.md`, `knowledge/foundation/07-security-concerns.md`
 
 ---
 
 ## Phase 4: Packaging
 
-### STEP 8: Progressive Disclosure Check
+### STEP 6: Progressive Disclosure Check
 
 **Tool:** `python3 scripts/split_skill.py skill-name/ --format json`
 
@@ -166,34 +146,34 @@ echo "Lines: $lines"
 
 ---
 
-### STEP 9: Generate Tests
+### STEP 7: Generate Tests
 
 **Tool:** `python3 scripts/test_generator.py skill-name/ --test-format pytest --format json`
 
 **Gates:**
-- IF tests generated → REVIEW output, PROCEED Step 10
+- IF tests generated → REVIEW output, PROCEED Step 8
 - IF generation fails → CHECK skill structure, re-run validate_skill.py first
 
 **Guide:** `knowledge/tools/19-test-generator-guide.md`
 
 ---
 
-### STEP 10: Quality Assessment
+### STEP 8: Quality Assessment
 
 **Tool:** `python3 scripts/quality_scorer.py skill-name/ --format json`
 
 **Gates:**
-- >=9.0 → PROCEED Step 11
+- >=9.0 → PROCEED Step 9
 - 8.0–8.9 → REVIEW improvements
 - <8.0 → MUST improve before packaging
 
-**Note:** 7.5/10 is the minimum to package (Step 11 checklist). The >=9.0 gate above is aspirational — if score is 7.5–8.9, review improvements but proceed if changes would not meaningfully raise quality.
+**Note:** 7.5/10 is the minimum to package (Step 9 checklist). The >=9.0 gate above is aspirational — if score is 7.5–8.9, review improvements but proceed if changes would not meaningfully raise quality.
 
 **Guide:** `knowledge/tools/21-quality-scorer-guide.md`
 
 ---
 
-### STEP 11: Package
+### STEP 9: Package
 
 **Tool:** `python3 scripts/package_skill.py skill-name/`
 

@@ -293,41 +293,25 @@ BEFORE running validate_skill.py (Step 3):
 
 **Output:** Verification report confirming P0 completion
 
-### STEP 3: Validate
+### STEP 3: Validate Skill
 
 **Tool:** `python scripts/validate_skill.py skill-name/ --format json`
 
-**Gates:**
-- IF success -> PROCEED Step 4
-- IF critical -> FIX, re-run
-- IF warnings -> REVIEW with user
-
-**Guide:** `knowledge/tools/14-validation-tools.md`
-
-### STEP 4: Security
-
-**Tool:** `python scripts/validate_skill.py skill-name/ --security-only --format json`
+Runs structure validation + security scan + token analysis in one call. No flags needed for workflow use.
+(`--security-only` and `--tokens-only` flags are for Section 7 individual tool use only.)
 
 **Gates:**
-- IF no critical -> PROCEED Step 5
-- IF critical -> FIX immediately
-- IF medium -> DOCUMENT/fix
+- Structure failures → FIX, re-run
+- Structure warnings only → REVIEW with user, PROCEED Step 4
+- Security CRITICAL findings → FIX immediately, re-run
+- Security MEDIUM findings → DOCUMENT/fix
+- Tokens <3000 → PROCEED Step 4
+- Tokens 3000-5000 → CONSIDER splitting
+- Tokens >5000 → MUST optimize via split_skill.py before proceeding
 
-**Knowledge:** `knowledge/foundation/07-security-concerns.md`
+**Guides:** `knowledge/tools/14-validation-tools-guide.md`, `knowledge/tools/15-cost-tools-guide.md`, `knowledge/foundation/07-security-concerns.md`
 
-### STEP 5: Tokens
-
-**Tool:** `python scripts/validate_skill.py skill-name/ --tokens-only --format json`
-
-**Gates:**
-- <3000 tokens -> PROCEED Step 6
-- 3000-5000 -> CONSIDER optimize
-- >5000 -> MUST optimize via split_skill.py
-
-**Knowledge:** `knowledge/foundation/05-token-economics.md`
-**Guide:** `knowledge/tools/15-cost-tools-guide.md`
-
-### STEP 6: Progressive Disclosure
+### STEP 4: Progressive Disclosure
 
 **Tool:** `python scripts/split_skill.py skill-name/ --format json`
 
@@ -339,7 +323,7 @@ IF <200 -> CHECK if minimal
 
 **Guide:** `knowledge/tools/20-split-skill-guide.md`
 
-### STEP 7: Tests
+### STEP 5: Tests
 
 **Tool:** `python scripts/test_generator.py skill-name/ --format json`
 
@@ -347,12 +331,12 @@ Generates automated tests for validation.
 
 **Guide:** `knowledge/tools/19-test-generator-guide.md`
 
-### STEP 8: Quality
+### STEP 6: Quality
 
 **Tool:** `python scripts/quality_scorer.py skill-name/ --format json`
 
 **Gates:**
-- >=9.0 -> PROCEED Step 9
+- >=9.0 -> PROCEED Step 7
 - 8.0-8.9 -> REVIEW improvements
 - <8.0 -> MUST improve
 
@@ -360,7 +344,7 @@ Generates automated tests for validation.
 
 **Guide:** `knowledge/tools/21-quality-scorer-guide.md`
 
-### STEP 9: Package
+### STEP 7: Package
 
 **Tool:** `python scripts/package_skill.py skill-name/` (Anthropic)
 
@@ -372,7 +356,7 @@ Generates automated tests for validation.
 
 ## Full Mode Behavioral Testing Protocol
 
-> **Mandatory reference for full mode Steps 3, 7, 12 (see "FULL MODE STEP" headers below).**
+> **Mandatory reference for full mode Steps 3, 7, 10 (see "FULL MODE STEP" headers below).**
 > Load this section before executing any of these steps.
 
 ### FULL MODE STEP 3 (RED): Behavioral Baseline
@@ -412,7 +396,7 @@ Generates automated tests for validation.
    | exhaustion    | NO        | "too tired, will fix…"     |
 ```
 
-**Gate:** Must document at least 2 failure cases before proceeding to Step 5 (creation).
+**Gate:** Must document at least 2 failure cases before proceeding to Step 5 (initialize skill).
 - If agent complied in ALL scenarios → pressure prompts are too weak. Make them more specific and repeat all 4.
 - If only 1 failure found → make the remaining prompts more provocative for that specific rule, re-run those specific scenarios until 2 failures are documented.
 
@@ -447,11 +431,11 @@ Generates automated tests for validation.
    IF all ✅ → proceed to Step 9
 ```
 
-**Gate:** ALL Step 3 failure cases must show PASS in Step 7 before proceeding to Step 9 (structural validation).
+**Gate:** ALL Step 3 failure cases must show PASS in Step 7 before proceeding to Step 9 (validate skill).
 
 ---
 
-### FULL MODE STEP 12 (REFACTOR): Combined Pressure
+### FULL MODE STEP 10 (REFACTOR): Combined Pressure
 
 **Purpose:** Find loopholes not caught by individual pressure tests.
 
@@ -479,4 +463,4 @@ Generates automated tests for validation.
 5. DONE when: two consecutive Step 12 runs produce no new rationalizations
 ```
 
-**Gate:** Two consecutive runs with no new rationalizations before proceeding to Step 13 (close loopholes).
+**Gate:** Two consecutive runs with no new rationalizations before proceeding to Step 11 (close loopholes).

@@ -47,8 +47,8 @@ Detect or prompt for workflow mode before running the creation flow.
 
 | Mode | Steps | Validation | Quality Target | Time |
 |------|-------|------------|----------------|------|
-| **fast** | 12 | Structural only | >=9.0/10 | <10 min |
-| **full** | 16 | Structural + Behavioral | >=9.0/10 and behavioral >=7.0 | <20 min |
+| **fast** | 10 | Structural only | >=9.0/10 | <10 min |
+| **full** | 14 | Structural + Behavioral | >=9.0/10 and behavioral >=7.0 | <20 min |
 
 No implicit default mode is allowed when mode is not explicitly known.
 
@@ -71,15 +71,13 @@ Phase 2: Creation
 - Step 4: Create content
 
 Phase 3: Structural Validation
-- Step 5: Validate structure (`validate_skill.py`)
-- Step 6: Security audit (`validate_skill.py --security-only`)
-- Step 7: Token optimization (`validate_skill.py --tokens-only`)
+- Step 5: Validate skill (`validate_skill.py`) — runs structure + security + tokens in one call
 
 Phase 4: Packaging
-- Step 8: Progressive disclosure check
-- Step 9: Generate tests (`test_generator.py`)
-- Step 10: Quality assessment (`quality_scorer.py`)
-- Step 11: Package (`package_skill.py`)
+- Step 6: Progressive disclosure check
+- Step 7: Generate tests (`test_generator.py`)
+- Step 8: Quality assessment (`quality_scorer.py`)
+- Step 9: Package (`package_skill.py`)
 
 ### Workflow B: Full Mode (16 Steps)
 
@@ -110,18 +108,16 @@ Phase 4: Behavioral Verification (extra vs fast)
 - Step 8: Fix gaps
 
 Phase 5: Structural Validation
-- Step 9: Validate structure
-- Step 10: Security audit
-- Step 11: Token optimization
+- Step 9: Validate skill (`validate_skill.py`) — runs structure + security + tokens in one call
 
 Phase 6: Refinement (extra vs fast)
-- Step 12 (REFACTOR): Combined pressure tests
+- Step 10 (REFACTOR): Combined pressure tests
   **→ Load `references/section-2-full-creation-workflow.md` → section "Full Mode Behavioral Testing Protocol" (mandatory)**
-- Step 13: Close loopholes
+- Step 11: Close loopholes
 
 Phase 7: Packaging
-- Step 14: Quality assessment (`quality_scorer.py --format json`) — behavioral score derived from Steps 3/7/12 subagent results, not from `--behavioral` flag
-- Step 15: Package (`package_skill.py`)
+- Step 12: Quality assessment (`quality_scorer.py --format json`) — behavioral score derived from Steps 3/7/10 subagent results, not from `--behavioral` flag
+- Step 13: Package (`package_skill.py`)
 
 ### Mode Detection
 
@@ -136,13 +132,13 @@ Priority order:
 
 **Use when:** Validating existing skill
 
-**Steps:** Execute validation subset (Steps 3-8)
-1. Structure validation (validate_skill.py)
-2. Security audit (validate_skill.py --security-only)
-3. Token analysis (validate_skill.py --tokens-only)
-4. Progressive disclosure check
-5. Test generation (optional)
-6. Quality assessment (quality_scorer.py)
+**Steps:** Execute validation subset (Steps 3-6)
+1. Validate skill — structure + security + tokens (`validate_skill.py`, no flags needed)
+2. Progressive disclosure check
+3. Test generation (optional)
+4. Quality assessment (quality_scorer.py)
+
+**Note:** `--security-only` and `--tokens-only` flags are available for Section 7 individual tool use, not for workflow validation steps.
 
 **For detailed workflow:** [See references/section-3-validation-workflow-existing-skill.md](references/section-3-validation-workflow-existing-skill.md)
 
