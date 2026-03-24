@@ -19,10 +19,11 @@ References:
     - File 12: Testing and validation checklist
 """
 
+import argparse
+import json
 import os
 import re
 import sys
-import json
 import yaml
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -33,6 +34,242 @@ try:
     from utils.reference_validator import CrossReferenceValidator
 except ImportError:
     CrossReferenceValidator = None  # Graceful fallback
+
+
+# Security scanning classes (from security_scanner.py)
+class SecuritySeverity(Enum):
+    """Security finding severity levels."""
+    CRITICAL = 0
+    HIGH = 1
+    MEDIUM = 2
+    LOW = 3
+    INFO = 4
+
+
+@dataclass
+class SecurityFinding:
+    """Single security finding."""
+    severity: SecuritySeverity
+    finding_type: str
+    file: str
+    line: int
+    description: str
+    evidence: str
+    remediation: str
+
+
+class SecurityScanner:
+    """Integrated security vulnerability detection."""
+
+    def __init__(self, skill_path: str):
+        self.skill_path = Path(skill_path)
+        self.findings: list[SecurityFinding] = []
+
+    def _get_scannable_files(self) -> list[Path]:
+        """Get all files that should be scanned."""
+        extensions = ['.py', '.md', '.sh', '.yaml', '.yml']
+        files = []
+        for ext in extensions:
+            files.extend(self.skill_path.rglob(f'*{ext}'))
+        return files
+
+    def _get_python_files(self) -> list[Path]:
+        """Get all Python files."""
+        return list(self.skill_path.rglob('*.py'))
+
+    def scan_hardcoded_secrets(self) -> list[SecurityFinding]:
+        """Scan for hardcoded secrets."""
+        findings = []
+        secret_patterns = [
+            (r'api[_-]?key\s*=\s*["\'][\w\-]+["\']', 'API key'),
+            (r'password\s*=\s*["\'][^"\']+["\']', 'Password'),
+            (r'token\s*=\s*["\'][\w\-]+["\']', 'Token'),
+            (r'secret\s*=\s*["\'][\w\-]+["\']', 'Secret'),
+            (r'Authorization:\s*Bearer\s+[\w\-\.]+', 'Bearer token'),
+            (r'sk-[a-zA-Z0-9]{32,}', 'API key pattern'),
+        ]
+
+        for file_path in self._get_scannable_files():
+            content = file_path.read_text(encoding='utf-8', errors='ignore')
+            for pattern, secret_type in secret_patterns:
+                for match in re.finditer(pattern, content, re.IGNORECASE):
+                    line_num = content[:match.start()].count('\n') + 1
+                    findings.append(SecurityFinding(
+                        severity=SecuritySeverity.CRITICAL,
+                        finding_type='Hardcoded Secret',
+                        file=str(file_path.relative_to(self.skill_path)),
+                        line=line_num,
+                        description=f'{secret_type} detected in code',
+                        evidence=match.group(0)[:50] + '...',
+                        remediation='Use environment variables or secret management'
+                    ))
+        return findings
+
+    def scan_command_injection(self) -> list[SecurityFinding]:
+        """Scan for command injection vulnerabilities."""
+        findings = []
+        dangerous_patterns = [
+            (r'subprocess\.\w+\([^)]*shell\s*=\s*True', 'shell=True', SecuritySeverity.CRITICAL),
+            (r'os\.system\s*\(', 'os.system()', SecuritySeverity.CRITICAL),
+            (r'\beval\s*\(', 'eval()', SecuritySeverity.CRITICAL),
+            (r'\bexec\s*\(', 'exec()', SecuritySeverity.CRITICAL),
+        ]
+
+        for file_path in self._get_python_files():
+            content = file_path.read_text(encoding='utf-8', errors='ignore')
+            for pattern, name, severity in dangerous_patterns:
+                for match in re.finditer(pattern, content):
+                    line_num = content[:match.start()].count('\n') + 1
+                    findings.append(SecurityFinding(
+                        severity=severity,
+                        finding_type='Command Injection Risk',
+                        file=str(file_path.relative_to(self.skill_path)),
+                        line=line_num,
+                        description=f'Dangerous function: {name}',
+                        evidence=match.group(0),
+                        remediation='Use parameterized commands, avoid shell=True/eval/exec'
+                    ))
+        return findings
+
+    def scan_sql_injection(self) -> list[SecurityFinding]:
+        """Scan for SQL injection patterns."""
+        findings = []
+        sql_patterns = [
+            (r'(SELECT|INSERT|UPDATE|DELETE).*\+.*', 'string concatenation'),
+            (r'(SELECT|INSERT|UPDATE|DELETE).*f["\'].*\{', 'f-string formatting'),
+            (r'(SELECT|INSERT|UPDATE|DELETE).*\.format\(', '.format() usage'),
+        ]
+
+        for file_path in self._get_python_files():
+            content = file_path.read_text(encoding='utf-8', errors='ignore')
+            for pattern, name in sql_patterns:
+                for match in re.finditer(pattern, content, re.IGNORECASE | re.MULTILINE):
+                    line_num = content[:match.start()].count('\n') + 1
+                    findings.append(SecurityFinding(
+                        severity=SecuritySeverity.HIGH,
+                        finding_type='SQL Injection Risk',
+                        file=str(file_path.relative_to(self.skill_path)),
+                        line=line_num,
+                        description=f'SQL query with {name}',
+                        evidence=match.group(0)[:80],
+                        remediation='Use parameterized queries with placeholders (?)'
+                    ))
+        return findings
+
+    def scan_dangerous_imports(self) -> list[SecurityFinding]:
+        """Scan for dangerous library imports."""
+        findings = []
+        dangerous_imports = [
+            ('import pickle', 'pickle', SecuritySeverity.HIGH,
+             'Arbitrary code execution via deserialization. Use json instead.'),
+            ('from pickle', 'pickle', SecuritySeverity.HIGH,
+             'Arbitrary code execution via deserialization. Use json instead.'),
+            ('yaml.load(', 'yaml.load()', SecuritySeverity.HIGH,
+             'Unsafe YAML loading. Use yaml.safe_load() instead.'),
+        ]
+
+        for file_path in self._get_python_files():
+            content = file_path.read_text(encoding='utf-8', errors='ignore')
+            for pattern, name, severity, remediation in dangerous_imports:
+                if pattern in content:
+                    line_num = content.split(pattern)[0].count('\n') + 1
+                    findings.append(SecurityFinding(
+                        severity=severity,
+                        finding_type='Dangerous Import',
+                        file=str(file_path.relative_to(self.skill_path)),
+                        line=line_num,
+                        description=f'Risky library: {name}',
+                        evidence=pattern,
+                        remediation=remediation
+                    ))
+        return findings
+
+    def run_all_scans(self) -> list[SecurityFinding]:
+        """Run all security scans."""
+        self.findings = []
+        self.findings.extend(self.scan_hardcoded_secrets())
+        self.findings.extend(self.scan_command_injection())
+        self.findings.extend(self.scan_sql_injection())
+        self.findings.extend(self.scan_dangerous_imports())
+        return self.findings
+
+
+@dataclass
+class CostBreakdown:
+    """Token and cost breakdown for a usage scenario."""
+    scenario: str
+    tokens: int
+    cost_per_use: float
+    monthly_cost: float
+
+
+class TokenAnalyzer:
+    """Token cost estimation and progressive disclosure analysis."""
+
+    PRICING = {
+        'claude-sonnet-4-6': {'input': 3.00, 'output': 15.00},
+        'claude-opus-4-6': {'input': 15.00, 'output': 75.00}
+    }
+
+    def __init__(self, skill_path: str, model: str = 'claude-sonnet-4-6'):
+        self.skill_path = Path(skill_path)
+        self.model = model
+        self.pricing = self.PRICING.get(model, self.PRICING['claude-sonnet-4-6'])
+
+    def count_tokens(self, text: str) -> int:
+        """Estimate token count using averaged method."""
+        words = len(text.split())
+        chars = len(text)
+        token_by_words = int(words * 1.3)
+        token_by_chars = int(chars / 4)
+        return int((token_by_words + token_by_chars) / 2)
+
+    def analyze_progressive_disclosure(self) -> dict:
+        """Analyze skill using 3-level progressive disclosure model."""
+        breakdown = {
+            'level_1_metadata': 0,
+            'level_2_skill_body': 0,
+            'level_3_references': {},
+        }
+
+        skill_md = self.skill_path / 'SKILL.md'
+        if skill_md.exists():
+            content = skill_md.read_text(encoding='utf-8')
+            # Level 1: Metadata (frontmatter)
+            if content.startswith('---'):
+                parts = content.split('---', 2)
+                if len(parts) >= 3:
+                    breakdown['level_1_metadata'] = self.count_tokens(parts[1])
+                    breakdown['level_2_skill_body'] = self.count_tokens(parts[2])
+            else:
+                breakdown['level_2_skill_body'] = self.count_tokens(content)
+
+        # Level 3: References
+        refs_dir = self.skill_path / 'references'
+        if refs_dir.exists():
+            for ref_file in refs_dir.glob('*.md'):
+                content = ref_file.read_text(encoding='utf-8')
+                breakdown['level_3_references'][ref_file.name] = self.count_tokens(content)
+
+        return breakdown
+
+    def estimate_usage_scenarios(self, breakdown: dict) -> dict[str, int]:
+        """Calculate token usage for different scenarios."""
+        scenarios = {
+            'idle': breakdown['level_1_metadata'],
+            'typical': breakdown['level_1_metadata'] + breakdown['level_2_skill_body'],
+        }
+
+        if breakdown['level_3_references']:
+            smallest_ref = min(breakdown['level_3_references'].values())
+            scenarios['with_reference'] = scenarios['typical'] + smallest_ref
+            total_refs = sum(breakdown['level_3_references'].values())
+            scenarios['worst_case'] = scenarios['typical'] + total_refs
+        else:
+            scenarios['with_reference'] = scenarios['typical']
+            scenarios['worst_case'] = scenarios['typical']
+
+        return scenarios
 
 
 class Severity(Enum):
@@ -552,10 +789,103 @@ class SkillValidator:
         return 0  # All passed
 
 
+def _format_json_results(results: dict) -> dict:
+    """Format validation results as JSON-serializable dict.
+
+    Args:
+        results: Dictionary containing structure, security, and/or tokens results
+
+    Returns:
+        Dict with status and formatted validations
+    """
+    output = {'status': 'success', 'validations': {}}
+
+    if 'structure' in results:
+        output['validations']['structure'] = {
+            'checks': [
+                {
+                    'name': r.check_name,
+                    'severity': r.severity.value,
+                    'message': r.message,
+                    'suggestion': r.suggestion
+                }
+                for r in results['structure']['results']
+            ],
+            'passed': sum(1 for r in results['structure']['results'] if r.severity == Severity.PASS),
+            'warnings': sum(1 for r in results['structure']['results'] if r.severity == Severity.WARNING),
+            'failed': sum(1 for r in results['structure']['results'] if r.severity == Severity.FAIL)
+        }
+
+    if 'security' in results:
+        output['validations']['security'] = {
+            'findings': [
+                {
+                    'severity': f.severity.name,
+                    'type': f.finding_type,
+                    'file': f.file,
+                    'line': f.line,
+                    'description': f.description,
+                    'remediation': f.remediation
+                }
+                for f in results['security']['findings']
+            ],
+            'critical_count': results['security']['critical'],
+            'high_count': results['security']['high']
+        }
+
+    if 'tokens' in results:
+        output['validations']['tokens'] = {
+            'breakdown': results['tokens']['breakdown'],
+            'scenarios': results['tokens']['scenarios']
+        }
+
+    return output
+
+
+def _format_text_results(results: dict) -> str:
+    """Format validation results as human-readable text report.
+
+    Args:
+        results: Dictionary containing structure, security, and/or tokens results
+
+    Returns:
+        Formatted multi-line string report
+    """
+    lines = []
+    lines.append('=' * 60)
+    lines.append('Skill Validation Report')
+    lines.append('=' * 60)
+
+    if 'structure' in results:
+        lines.append('\n--- Structure Validation ---')
+        for r in results['structure']['results']:
+            icon = 'PASS' if r.severity == Severity.PASS else 'WARN' if r.severity == Severity.WARNING else 'FAIL'
+            lines.append(f"[{icon}] {r.check_name}: {r.message}")
+            if r.suggestion:
+                lines.append(f"      -> {r.suggestion}")
+
+    if 'security' in results:
+        lines.append('\n--- Security Scan ---')
+        findings = results['security']['findings']
+        if not findings:
+            lines.append('No security issues found.')
+        else:
+            for f in findings:
+                lines.append(f"[{f.severity.name}] {f.finding_type} in {f.file}:{f.line}")
+                lines.append(f"      {f.description}")
+                lines.append(f"      Fix: {f.remediation}")
+
+    if 'tokens' in results:
+        lines.append('\n--- Token Analysis ---')
+        scenarios = results['tokens']['scenarios']
+        for name, tokens in scenarios.items():
+            lines.append(f"  {name}: {tokens} tokens")
+
+    return '\n'.join(lines)
+
+
 def main():
     """CLI entry point."""
-    import argparse
-    
     parser = argparse.ArgumentParser(
         description='Comprehensive skill validation tool',
         epilog='References: Files 02, 07, 10, 12 for validation rules'
@@ -565,29 +895,88 @@ def main():
                         help='Treat warnings as failures')
     parser.add_argument('--format', choices=['text', 'json'], default='text',
                         help='Output format (default: text)')
-    
+    # NEW FLAGS
+    parser.add_argument('--security-only', action='store_true',
+                        help='Run only security scan')
+    parser.add_argument('--tokens-only', action='store_true',
+                        help='Run only token analysis')
+    parser.add_argument('--structure-only', action='store_true',
+                        help='Run only structure validation')
+
     args = parser.parse_args()
-    
+
     # Validate skill path
     skill_path = Path(args.skill_path)
     if not skill_path.exists():
         print(f"Error: Skill path '{skill_path}' does not exist", file=sys.stderr)
         sys.exit(2)
-    
+
     if not skill_path.is_dir():
         print(f"Error: '{skill_path}' is not a directory", file=sys.stderr)
         sys.exit(2)
-    
-    # Run validation
-    validator = SkillValidator(skill_path, strict=args.strict)
-    validator.run_all_validations()
-    
-    # Generate report
-    report = validator.generate_report(format=args.format)
-    print(report)
-    
-    # Exit with appropriate code
-    sys.exit(validator.get_exit_code())
+
+    # Determine which validations to run
+    # If no specific flags, run all (default behavior)
+    if not any([args.security_only, args.tokens_only, args.structure_only]):
+        run_structure = run_security = run_tokens = True
+    else:
+        # Support combining flags (e.g., --security-only --structure-only)
+        run_structure = args.structure_only or not (args.security_only or args.tokens_only)
+        run_security = args.security_only or not (args.structure_only or args.tokens_only)
+        run_tokens = args.tokens_only or not (args.structure_only or args.security_only)
+
+    results = {}
+    exit_code = 0
+
+    # Run structure validation
+    if run_structure:
+        validator = SkillValidator(skill_path, strict=args.strict)
+        validator.run_all_validations()
+        results['structure'] = {
+            'results': validator.results,
+            'exit_code': validator.get_exit_code()
+        }
+        # Only fail on warnings if strict mode is enabled
+        has_failures = any(r.severity == Severity.FAIL for r in validator.results)
+        has_warnings = any(r.severity == Severity.WARNING for r in validator.results)
+        if has_failures:
+            exit_code = max(exit_code, 2)
+        elif has_warnings and args.strict:
+            exit_code = max(exit_code, 1)
+
+    # Run security scan
+    if run_security:
+        scanner = SecurityScanner(str(skill_path))
+        findings = scanner.run_all_scans()
+        critical_count = sum(1 for f in findings if f.severity == SecuritySeverity.CRITICAL)
+        high_count = sum(1 for f in findings if f.severity == SecuritySeverity.HIGH)
+        results['security'] = {
+            'findings': findings,
+            'critical': critical_count,
+            'high': high_count
+        }
+        if critical_count > 0:
+            exit_code = max(exit_code, 2)
+        elif high_count > 0:
+            exit_code = max(exit_code, 1)
+
+    # Run token analysis
+    if run_tokens:
+        analyzer = TokenAnalyzer(str(skill_path))
+        breakdown = analyzer.analyze_progressive_disclosure()
+        scenarios = analyzer.estimate_usage_scenarios(breakdown)
+        results['tokens'] = {
+            'breakdown': breakdown,
+            'scenarios': scenarios
+        }
+
+    # Output results
+    if args.format == 'json':
+        print(json.dumps(_format_json_results(results), indent=2))
+    else:
+        print(_format_text_results(results))
+
+    sys.exit(exit_code)
 
 
 if __name__ == '__main__':

@@ -79,7 +79,7 @@ python scripts/decision_helper.py --analyze "description" --format json
 
 ### STEP 3: Initialize Skill
 
-**Tool:** `python3 scripts/init_skill.py skill-name --mode fast --path /target/path`
+**Tool:** `python3 scripts/init.py skill skill-name --mode fast --path /target/path`
 
 **Gates:**
 - IF target path already exists → STOP, ask user: overwrite, rename, or cancel
@@ -126,7 +126,7 @@ echo "Lines: $lines"
 
 ### STEP 6: Security Audit
 
-**Tool:** `python3 scripts/security_scanner.py skill-name/ --format json`
+**Tool:** `python3 scripts/validate_skill.py skill-name/ --security-only --format json`
 
 **Gates:**
 - IF no critical → PROCEED Step 7
@@ -139,7 +139,7 @@ echo "Lines: $lines"
 
 ### STEP 7: Token Optimization
 
-**Tool:** `python3 scripts/token_estimator.py skill-name/ --format json`
+**Tool:** `python3 scripts/validate_skill.py skill-name/ --tokens-only --format json`
 
 **Gates:**
 - <3000 tokens → PROCEED Step 8
