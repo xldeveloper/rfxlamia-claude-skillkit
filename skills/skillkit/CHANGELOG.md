@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.7] - 2026-03-24
+
+### Fixed
+- Consolidated 3 separate validation steps (structure + security + tokens) into 1 combined step in fast and full mode workflows — `validate_skill.py` already runs all three by default since PR #13, instructions were out of sync
+- Updated step counts: fast mode 12→10, full mode 16→14
+- Fixed stale heading labels ("12 Steps"/"16 Steps") contradicting the mode selection table
+- Fixed self-referential `REPEAT Step 12` inside `FULL MODE STEP 10` (should be Step 10)
+- Fixed ambiguous "go back to Step 6" in GREEN behavioral protocol — now explicit SKILL.md reference
+- Fixed Section 5 migration step range (3-8) → (5-8)
+- Added explicit structure PASS gate branch to combined validate step (both workflows)
+- Fixed `python` → `python3` throughout `section-2-full-creation-workflow.md`
+- Clarified `--tokens-only`/`--security-only` flags are for Section 7 individual tool use only
+
+---
+
 ## [2.1.6] - 2026-03-14
 
 ### Fixed
