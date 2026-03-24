@@ -352,7 +352,7 @@ Name requirements:
     # Subagent subcommand
     subagent_parser = subparsers.add_parser('subagent', help='Initialize a new subagent')
     subagent_parser.add_argument('name', help='Name of the subagent')
-    subagent_parser.add_argument('--path', required=True, help='Path for subagent file')
+    subagent_parser.add_argument('--path', default='.', help='Path for subagent file')
 
     args = parser.parse_args()
 

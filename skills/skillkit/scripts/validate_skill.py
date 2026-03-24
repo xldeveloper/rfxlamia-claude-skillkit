@@ -19,11 +19,11 @@ References:
     - File 12: Testing and validation checklist
 """
 
+import argparse
+import json
 import os
 import re
 import sys
-import json
-import argparse
 import yaml
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -790,7 +790,14 @@ class SkillValidator:
 
 
 def _format_json_results(results: dict) -> dict:
-    """Format results as JSON."""
+    """Format validation results as JSON-serializable dict.
+
+    Args:
+        results: Dictionary containing structure, security, and/or tokens results
+
+    Returns:
+        Dict with status and formatted validations
+    """
     output = {'status': 'success', 'validations': {}}
 
     if 'structure' in results:
@@ -836,7 +843,14 @@ def _format_json_results(results: dict) -> dict:
 
 
 def _format_text_results(results: dict) -> str:
-    """Format results as human-readable text."""
+    """Format validation results as human-readable text report.
+
+    Args:
+        results: Dictionary containing structure, security, and/or tokens results
+
+    Returns:
+        Formatted multi-line string report
+    """
     lines = []
     lines.append('=' * 60)
     lines.append('Skill Validation Report')
