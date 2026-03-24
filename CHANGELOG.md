@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.6.0] - 2026-03-24
+
+### Added
+- Unified `init.py` script with subcommand pattern (`skill` and `subagent` subcommands)
+- Enhanced `validate_skill.py` with `--security-only`, `--tokens-only`, `--structure-only` flags
+- Comprehensive test suite: `test_consolidation.py` with 17 tests
+
+### Changed
+- Consolidated 6 scripts into 2: `init_skill.py` + `init_subagent.py` → `init.py`, `security_scanner.py` + `token_estimator.py` → `validate_skill.py`
+- Deprecated old scripts with clear migration warnings
+- Updated all documentation references to use new commands
+- ~800 lines of code saved through consolidation
+
+---
+
 ## [2.5.2] - 2026-03-22
 
 ### Fixed
