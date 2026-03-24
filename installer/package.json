@@ -14,7 +14,7 @@
     "agents/"
   ],
   "scripts": {
-    "prepublishOnly": "node ../scripts/generate-manifest.js && trap 'npm run clean-assets' EXIT; cp -r ../skills ./skills && cp -r ../agents ./agents",
+    "prepublishOnly": "node ../scripts/generate-manifest.js && cp -r ../skills ./skills && cp -r ../agents ./agents",
     "postpublish": "npm run clean-assets",
     "clean-assets": "rm -rf ./skills ./agents 2>/dev/null; true",
     "test": "node --test src/**/*.test.js"
