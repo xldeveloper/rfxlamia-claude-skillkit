@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.0.0] - 2026-03-25
+
+### Changed
+- **BREAKING:** Community skills (24) and agents (7) moved to [SkillKit Marketplace](https://github.com/skillkit-marketplace/skills)
+- Installer simplified to core skills only (`skillkit` + `skillkit-help`)
+- For community skills & agents, use `npx @rfxlamia/sm`
+
+### Removed
+- Bundles system
+- 24 community skills (now in marketplace)
+- 7 agents (now in marketplace)
+
+---
+
 ## [2.6.0] - 2026-03-24
 
 ### Added
