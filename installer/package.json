@@ -10,13 +10,12 @@
     "bin/",
     "src/",
     "skills-manifest.json",
-    "skills/",
-    "agents/"
+    "skills/"
   ],
   "scripts": {
-    "prepublishOnly": "node ../scripts/generate-manifest.js && npm run clean-assets && cp -r ../skills ./skills && cp -r ../agents ./agents",
+    "prepublishOnly": "node ../scripts/generate-manifest.js && npm run clean-assets && cp -r ../skills ./skills",
     "postpublish": "npm run clean-assets",
-    "clean-assets": "rm -rf ./skills ./agents 2>/dev/null; true",
+    "clean-assets": "rm -rf ./skills 2>/dev/null; true",
     "test": "node --test src/**/*.test.js"
   },
   "engines": {

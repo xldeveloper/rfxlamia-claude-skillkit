@@ -5,19 +5,19 @@ import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { printBanner } from './banner.js'
 import { selectScope } from './scope.js'
-import { pickInstallables } from './picker.js'
 import { installSelected } from './install.js'
 import { checkForUpdates } from './update.js'
 import { selectTools, getToolTargets } from './tools.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const { version } = JSON.parse(readFileSync(join(__dirname, '..', 'package.json'), 'utf8'))
+const pkg = JSON.parse(readFileSync(join(__dirname, '..', 'package.json'), 'utf8'))
+const manifest = JSON.parse(readFileSync(join(__dirname, '..', 'skills-manifest.json'), 'utf8'))
 
 export async function run() {
-  printBanner(version)
+  printBanner(pkg.version)
   await checkForUpdates()
 
-  intro('SkillKit Installer')
+  intro('SkillKit Core Installer')
 
   const selectedTools = await selectTools()
   if (isCancel(selectedTools)) { cancel('Cancelled.'); process.exit(0) }
@@ -25,17 +25,18 @@ export async function run() {
   const scope = await selectScope(selectedTools)
   if (isCancel(scope)) { cancel('Cancelled.'); process.exit(0) }
 
-  const selected = await pickInstallables()
-  if (isCancel(selected)) { cancel('Cancelled.'); process.exit(0) }
-
   const targets = getToolTargets(selectedTools, scope)
-  const { results, totalInstalled } = await installSelected(selected, targets)
+  const { results, totalInstalled } = await installSelected(
+    { skills: manifest.skills, agents: [] },
+    targets
+  )
 
   const targetLabels = results
     .filter(r => r.installed > 0)
     .map(r => `${r.target.name} (${r.target.scope})`)
     .join(', ')
 
-  outro(`Done! ${totalInstalled} item(s) installed to ${targetLabels || 'no targets'}.`)
+  outro(`Done! ${totalInstalled} core skill(s) installed to ${targetLabels || 'no targets'}.`)
+  log.info('For community skills & agents, run: npx @rfxlamia/sm')
   log.info('Restart your coding agent tools to pick up new skills.')
 }

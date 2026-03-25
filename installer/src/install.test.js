@@ -25,13 +25,6 @@ test('installSelected validates skills is an array', async () => {
   )
 })
 
-test('installSelected validates agents is an array', async () => {
-  await assert.rejects(
-    installSelected({ skills: [], agents: 'not-array' }, [makeTarget('/tmp', '/tmp')]),
-    /agents must be an array/
-  )
-})
-
 test('installSelected validates targets is an array', async () => {
   await assert.rejects(
     installSelected({ skills: [], agents: [] }, 'not-array'),

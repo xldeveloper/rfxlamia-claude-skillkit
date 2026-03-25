@@ -9,11 +9,10 @@ const PACKAGE_ROOT = join(__dirname, '..')
 
 export async function installSelected({ skills, agents }, targets) {
   if (!Array.isArray(skills)) throw new TypeError('skills must be an array')
-  if (!Array.isArray(agents)) throw new TypeError('agents must be an array')
   if (!Array.isArray(targets)) throw new TypeError('targets must be an array')
 
   const s = spinner()
-  s.start('Installing...')
+  s.start('Installing core skills...')
 
   const results = []
   let totalInstalled = 0
@@ -37,28 +36,11 @@ export async function installSelected({ skills, agents }, targets) {
       }
     }
 
-    if (target.agentsDir) {
-      for (const agent of agents) {
-        if (!agent.name || !agent.path) {
-          skipped.push(`invalid-agent-${skipped.length}`)
-          continue
-        }
-        const src = join(PACKAGE_ROOT, agent.path)
-        const dest = join(target.agentsDir, agent.name + '.md')
-        if (!existsSync(src)) { skipped.push(agent.name); continue }
-        mkdirSync(target.agentsDir, { recursive: true })
-        cpSync(src, dest)
-        installed++
-      }
-    } else if (agents.length > 0) {
-      log.warn(`Agents are not supported for ${target.name} — skipped.`)
-    }
-
     results.push({ target, installed, skipped })
     totalInstalled += installed
   }
 
-  s.stop(`Installed ${totalInstalled} item(s)`)
+  s.stop(`Installed ${totalInstalled} core skill(s)`)
 
   const allSkipped = results.flatMap(r => r.skipped)
   if (allSkipped.length > 0) {
