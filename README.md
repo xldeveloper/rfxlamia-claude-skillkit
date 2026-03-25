@@ -94,6 +94,19 @@ Quality target: **9.0+/10** via 5-layer validation and multi-proposal generation
 
 ---
 
+## Screenshots
+
+**CLI installer**
+![installer](docs/images/installer.png)
+
+**Guided orientation**
+![skillkit-help](docs/images/skillkit-help.png)
+
+**A finished skill**
+![skill](docs/images/skill.png)
+
+---
+
 ## Community Skills & Agents
 
 24 community skills and 7 agents are available at [SkillKit Marketplace](https://github.com/skillkit-marketplace/skills):
